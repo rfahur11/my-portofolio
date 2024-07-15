@@ -19,7 +19,7 @@ const HeroSection = () => {
       <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pl-10">
         <div className="relative w-full p-3 rounded md:p-8">
           <div className="rounded-lg">
-            <image src="/picture.png" alt="Hero" />
+            <img src="/picture.png" alt="Hero" />
           </div>
         </div>
       </div>

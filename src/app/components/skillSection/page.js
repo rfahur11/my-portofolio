@@ -47,7 +47,7 @@ const SkillSection = () => {
           {skills.map((skill, index) => (
             <div key={index} className="p-2">
               <div className="bg-white rounded-full p-2 shadow-md flex items-center justify-center">
-                <image src={skill.icon} alt={skill.name} className="h-16 w-16" />
+                <img src={skill.icon} alt={skill.name} className="h-16 w-16" />
               </div>
               <p className="text-center mt-2 text-gray-700 text-sm">
                 {skill.name}
