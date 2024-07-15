@@ -69,7 +69,7 @@ const ExperienceSection = () => {
                 <h3 className="text-xl font-bold text-gray-900">
                   {experience.title}
                 </h3>
-                <img
+                <image
                   src={experience.icon}
                   alt="Custom Icon"
                   className="h-9 w-9 ml-2"
