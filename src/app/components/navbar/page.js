@@ -3,7 +3,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +12,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#0E2E0B] p-4 sticky top-0 z-50">
+    <nav className="bg-[#0E2E0B] p-4 sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Logo */}
         <div className="text-white text-2xl font-bold">My Portfolio</div>
-        <div className="hidden md:flex space-x-4">
+
+        {/* Menu links for large screens */}
+        <div className="flex max-md:hidden space-x-6">
           <a href="#projects" className="text-white hover:text-gray-300">
             Projects
           </a>
@@ -30,17 +32,21 @@ const Navbar = () => {
             Contact
           </a>
         </div>
+
+        {/* Hamburger Menu for small screens */}
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
             className="text-white focus:outline-none"
           >
-            {isOpen ? "Close" : "Menu"}
+            Menu
           </button>
         </div>
       </div>
+
+      {/* Dropdown menu for small screens */}
       {isOpen && (
-        <div className="md:hidden">
+        <div className="md:hidden mt-2 space-y-2 bg-[#0E2E0B] rounded shadow-md">
           <a
             href="#projects"
             className="block text-white py-2 px-4 hover:bg-gray-700"
