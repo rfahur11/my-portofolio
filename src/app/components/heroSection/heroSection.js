@@ -7,10 +7,12 @@ const HeroSection = () => {
             Im a Software Engineer.|
           </h2>
           <p className="text-fuchsia-50 max-w-md mx-auto mt-3 text-base sm:text-lg md:mt-5 md:text-sm md:max-w-3xl">
-            Currently, Im a Software Engineer at Facebook,
+            Currently, Im a Freelance and freshgraduate from Education of
+            information and System Technology at Indonesia University of
+            Education,
           </p>
           <p className="max-w-md mx-auto mt-3 text-base text-fuchsia-50 sm:text-sm md:mt-5 md:text-lg md:max-w-3xl">
-            A self-taught UI/UX designer, functioning in the industry for 3+
+            A self-taught UI/UX designer, web functioning in the industry for 3+
             years now. I make meaningful and delightful digital products that
             create an equilibrium between user needs and business goals.
           </p>
