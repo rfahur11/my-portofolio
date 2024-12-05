@@ -12,9 +12,10 @@ const HeroSection = () => {
             Education,
           </p>
           <p className="max-w-md mx-auto mt-3 text-base text-fuchsia-50 sm:text-sm md:mt-5 md:text-lg md:max-w-3xl">
-            A self-taught UI/UX designer, web functioning in the industry for 3+
-            years now. I make meaningful and delightful digital products that
-            create an equilibrium between user needs and business goals.
+            A self-taught fullstack web and interest in a good problem solving
+            and learn many ways to solve many problems in my village community.
+            I make meaningful and delightful digital products that create an
+            equilibrium between user needs and business goals.
           </p>
         </div>
       </div>
