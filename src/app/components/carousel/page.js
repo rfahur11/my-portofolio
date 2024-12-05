@@ -6,7 +6,7 @@ import ProjectCarousel from "../projectCarousel";
 
 const ProjectSection = () => {
   return (
-    <section id="projects" className="py-16 bg-customGreen">
+    <section id="projects" className="py-16 bg-green-300">
       <ProjectCarousel />
     </section>
   );
