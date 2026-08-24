@@ -5,8 +5,8 @@ export async function POST(request) {
   try {
     const { email, password } = await request.json();
 
-    const AUTH_EMAIL = process.env.AUTH_EMAIL;
-    const AUTH_PASSWORD = process.env.AUTH_PASSWORD;
+    const AUTH_EMAIL = process.env.ADMIN_EMAIL;
+    const AUTH_PASSWORD = process.env.ADMIN_PASSWORD;
 
     if (AUTH_EMAIL && AUTH_PASSWORD) {
       if (email === AUTH_EMAIL && password === AUTH_PASSWORD) {
