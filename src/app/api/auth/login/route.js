@@ -5,6 +5,24 @@ export async function POST(request) {
   try {
     const { email, password } = await request.json();
 
+    const AUTH_EMAIL = process.env.AUTH_EMAIL;
+    const AUTH_PASSWORD = process.env.AUTH_PASSWORD;
+
+    if (AUTH_EMAIL && AUTH_PASSWORD) {
+      if (email === AUTH_EMAIL && password === AUTH_PASSWORD) {
+        const response = NextResponse.json({ success: true, mode: "env" });
+        response.cookies.set("admin-token", "env-session-active-token", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 60 * 60 * 24,
+          path: "/",
+        });
+        return response;
+      }
+      return NextResponse.json({ error: "Invalid credentials" }, { status: 400 });
+    }
+
     if (!isSupabaseConfigured) {
       // Mock Local Auth Check
       if (email === "admin@example.com" && password === "admin") {
