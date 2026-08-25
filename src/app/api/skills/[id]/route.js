@@ -3,7 +3,7 @@ import { deleteItem } from "@/lib/db";
 
 export async function DELETE(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     await deleteItem("skills", id);
     return NextResponse.json({ success: true });
   } catch (error) {

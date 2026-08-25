@@ -3,7 +3,7 @@ import { updateItem } from "@/lib/db";
 
 export async function PUT(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     
     // We update is_read status

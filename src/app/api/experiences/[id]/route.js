@@ -3,7 +3,7 @@ import { updateItem, deleteItem } from "@/lib/db";
 
 export async function PUT(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const data = await updateItem("experiences", id, body);
     return NextResponse.json(data);
@@ -14,7 +14,7 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     await deleteItem("experiences", id);
     return NextResponse.json({ success: true });
   } catch (error) {
