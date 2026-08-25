@@ -3,16 +3,18 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { GraduationCap, MapPin, Code2, Briefcase } from "lucide-react";
-
-const stats = [
-  { label: "Projects Completed", value: "7+", icon: Code2 },
-  { label: "Work Experiences", value: "5", icon: Briefcase },
-  { label: "Graduated Year", value: "2024", icon: GraduationCap },
-];
+import { useLanguage } from "@/lib/LanguageContext";
 
 const AboutSection = () => {
+  const { language } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const stats = [
+    { label: language === "id" ? "Proyek Selesai" : "Projects Completed", value: "7+", icon: Code2 },
+    { label: language === "id" ? "Pengalaman Kerja" : "Work Experiences", value: "5", icon: Briefcase },
+    { label: language === "id" ? "Tahun Kelulusan" : "Graduated Year", value: "2024", icon: GraduationCap },
+  ];
 
   return (
     <section id="about" className="section-padding relative overflow-hidden">
@@ -28,10 +30,10 @@ const AboutSection = () => {
           className="mb-16"
         >
           <span className="text-accent-blue text-sm font-medium tracking-wider uppercase">
-            Get to know me
+            {language === "id" ? "Kenali saya lebih dekat" : "Get to know me"}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold mt-2 text-[var(--text-primary)]">
-            About <span className="text-gradient">Me</span>
+            {language === "id" ? "Tentang " : "About "}<span className="text-gradient">{language === "id" ? "Saya" : "Me"}</span>
           </h2>
         </motion.div>
 
@@ -44,25 +46,47 @@ const AboutSection = () => {
             className="lg:col-span-3 space-y-6"
           >
             <p className="text-lg leading-relaxed text-[var(--text-secondary)]">
-              Fullstack & Integration Engineer with ~2.5 years of experience based in{" "}
-              <span className="font-semibold text-[var(--text-primary)]">
-                Central Java, Indonesia
-              </span>
-              . I specialize in architecting AI-powered POS systems, resilient ERP pipelines, high-throughput backend services, and cross-platform applications.
+              {language === "id" ? (
+                <>
+                  Fullstack & Integration Engineer dengan ~2.5 tahun pengalaman yang berdomisili di{" "}
+                  <span className="font-semibold text-[var(--text-primary)]">
+                    Jawa Tengah, Indonesia
+                  </span>
+                  . Saya berspesialisasi dalam merancang sistem POS berbasis AI, pipeline ERP tangguh, layanan backend throughput tinggi, dan aplikasi lintas platform.
+                </>
+              ) : (
+                <>
+                  Fullstack & Integration Engineer with ~2.5 years of experience based in{" "}
+                  <span className="font-semibold text-[var(--text-primary)]">
+                    Central Java, Indonesia
+                  </span>
+                  . I specialize in architecting AI-powered POS systems, resilient ERP pipelines, high-throughput backend services, and cross-platform applications.
+                </>
+              )}
             </p>
 
             <p className="text-base leading-relaxed text-[var(--text-muted)]">
-              With a solid foundation in Information Systems Education from Indonesia University of Education, I have built tech solutions ranging from clinical workflow automation to complex marketplace order-ingestion systems. I am passionate about streamlining operations, integrating intelligent ML models into real-world applications, and creating efficient workflows.
+              {language === "id" ? (
+                "Dengan fondasi yang kuat di bidang Pendidikan Teknologi Informasi dari Universitas Pendidikan Indonesia, saya telah membangun solusi teknologi mulai dari otomatisasi alur kerja klinis hingga sistem penerimaan pesanan marketplace yang kompleks. Saya sangat tertarik dalam menyederhanakan operasional, mengintegrasikan model ML cerdas ke aplikasi dunia nyata, dan menciptakan alur kerja yang efisien."
+              ) : (
+                "With a solid foundation in Information Systems Education from Indonesia University of Education, I have built tech solutions ranging from clinical workflow automation to complex marketplace order-ingestion systems. I am passionate about streamlining operations, integrating intelligent ML models into real-world applications, and creating efficient workflows."
+              )}
             </p>
 
             <p className="text-base leading-relaxed text-[var(--text-muted)]">
-              I actively work with technologies like Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, and MongoDB. I look forward to contributing to projects where technology acts as a bridge to automation and operational efficiency.
+              {language === "id" ? (
+                "Saya aktif bekerja dengan teknologi seperti Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, dan MongoDB. Saya sangat menantikan untuk berkontribusi pada proyek di mana teknologi bertindak sebagai jembatan menuju otomatisasi dan efisiensi operasional."
+              ) : (
+                "I actively work with technologies like Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, and MongoDB. I look forward to contributing to projects where technology acts as a bridge to automation and operational efficiency."
+              )}
             </p>
 
             {/* Location */}
             <div className="flex items-center gap-2 text-[var(--text-muted)]">
               <MapPin size={16} className="text-accent-blue" />
-              <span className="text-sm">Cilacap Regency, Central Java, Indonesia</span>
+              <span className="text-sm">
+                {language === "id" ? "Kabupaten Cilacap, Jawa Tengah, Indonesia" : "Cilacap Regency, Central Java, Indonesia"}
+              </span>
             </div>
           </motion.div>
 
@@ -111,7 +135,7 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-[var(--text-primary)]">
-                    B.Ed. Information & System Information Technology
+                    {language === "id" ? "S.Pd. Pendidikan Teknologi Informasi & Komputer" : "B.Ed. Information & System Information Technology"}
                   </div>
                   <div className="text-xs text-[var(--text-muted)] mt-1">
                     Universitas Pendidikan Indonesia (2020 - 2024)

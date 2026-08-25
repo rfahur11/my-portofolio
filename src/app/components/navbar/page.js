@@ -3,17 +3,20 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, Globe } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
+const getNavLinks = (lang) => [
+  { href: "#about", label: lang === "id" ? "Tentang" : "About" },
+  { href: "#projects", label: lang === "id" ? "Proyek" : "Projects" },
+  { href: "#experience", label: lang === "id" ? "Pengalaman" : "Experience" },
   { href: "#skills", label: "Skills" },
-  { href: "#contact", label: "Contact" },
+  { href: "#contact", label: lang === "id" ? "Kontak" : "Contact" },
 ];
 
 const Navbar = () => {
+  const { language, setLanguage } = useLanguage();
+  const navLinks = getNavLinks(language);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -28,7 +31,6 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Detect active section
       const sections = navLinks.map((link) => link.href.slice(1));
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
@@ -44,7 +46,7 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [language]);
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
@@ -111,11 +113,21 @@ const Navbar = () => {
               </a>
             ))}
 
+            {/* Language Toggle */}
+            <button
+              onClick={() => setLanguage(language === "en" ? "id" : "en")}
+              className="ml-3 px-2 py-1.5 rounded-xl glass hover:shadow-glow transition-all duration-300 flex items-center gap-1 text-[11px] font-bold text-[var(--text-primary)]"
+              aria-label="Toggle language"
+            >
+              <Globe size={14} className="text-accent-blue" />
+              <span>{language === "en" ? "EN" : "ID"}</span>
+            </button>
+
             {/* Theme Toggle */}
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="ml-4 p-2.5 rounded-xl glass hover:shadow-glow transition-all duration-300"
+                className="ml-3 p-2.5 rounded-xl glass hover:shadow-glow transition-all duration-300"
                 aria-label="Toggle theme"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -139,6 +151,16 @@ const Navbar = () => {
 
           {/* Mobile Controls */}
           <div className="flex items-center gap-3 md:hidden">
+            {/* Language Toggle */}
+            <button
+              onClick={() => setLanguage(language === "en" ? "id" : "en")}
+              className="px-2 py-1 rounded-lg glass flex items-center gap-1 text-[10px] font-bold text-[var(--text-primary)]"
+              aria-label="Toggle language"
+            >
+              <Globe size={12} className="text-accent-blue" />
+              <span>{language === "en" ? "EN" : "ID"}</span>
+            </button>
+
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

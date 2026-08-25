@@ -78,12 +78,14 @@ export default function AdminDashboard() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("/images/avatar.jpg");
+  const [selectedMessage, setSelectedMessage] = useState(null);
   const router = useRouter();
 
   // Form states
   const [projectForm, setProjectForm] = useState({
     title: "",
     description: "",
+    description_id: "",
     imageUrl: "",
     link: "",
     techStack: "",
@@ -91,11 +93,14 @@ export default function AdminDashboard() {
   });
   const [expForm, setExpForm] = useState({
     title: "",
+    title_id: "",
     organization: "",
     location: "",
     period: "",
     description: "",
+    description_id: "",
     highlights: "",
+    highlights_id: "",
     icon: "/placeholder-logo.png",
   });
   const [skillForm, setSkillForm] = useState({
@@ -130,6 +135,20 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchData();
+    
+    // Poll for new messages every 10 seconds for real-time updates
+    const interval = setInterval(() => {
+      fetch("/api/contact")
+        .then((res) => {
+          if (res.ok) return res.json();
+        })
+        .then((data) => {
+          if (data) setMessages(data);
+        })
+        .catch((err) => console.error("Poll messages failed:", err));
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchData = async () => {
@@ -205,6 +224,7 @@ export default function AdminDashboard() {
     setProjectForm({
       title: "",
       description: "",
+      description_id: "",
       imageUrl: "",
       link: "",
       techStack: "",
@@ -218,6 +238,7 @@ export default function AdminDashboard() {
     setProjectForm({
       title: p.title,
       description: p.description,
+      description_id: p.description_id || "",
       imageUrl: p.imageUrl,
       link: p.link,
       techStack: p.techStack.join(", "),
@@ -244,6 +265,7 @@ export default function AdminDashboard() {
       const body = {
         ...expForm,
         highlights: expForm.highlights.split("\n").map((s) => s.trim()).filter(Boolean),
+        highlights_id: expForm.highlights_id.split("\n").map((s) => s.trim()).filter(Boolean),
       };
 
       const method = editingId ? "PUT" : "POST";
@@ -268,11 +290,14 @@ export default function AdminDashboard() {
   const resetExpForm = () => {
     setExpForm({
       title: "",
+      title_id: "",
       organization: "",
       location: "",
       period: "",
       description: "",
+      description_id: "",
       highlights: "",
+      highlights_id: "",
       icon: "/placeholder-logo.png",
     });
     setEditingId(null);
@@ -282,11 +307,14 @@ export default function AdminDashboard() {
     setEditingId(e.id);
     setExpForm({
       title: e.title,
+      title_id: e.title_id || "",
       organization: e.organization,
       location: e.location,
       period: e.period,
       description: e.description,
+      description_id: e.description_id || "",
       highlights: e.highlights.join("\n"),
+      highlights_id: (e.highlights_id || []).join("\n"),
       icon: e.icon || "/placeholder-logo.png",
     });
   };
@@ -339,7 +367,25 @@ export default function AdminDashboard() {
       showToast("Skill deleted.");
       fetchData();
     } catch (err) {
-      showToast(err.message, "error");
+    }
+  };
+  const openMessage = async (msg) => {
+    setSelectedMessage(msg);
+    if (!msg.is_read) {
+      try {
+        const res = await fetch(`/api/contact/${msg.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ is_read: true }),
+        });
+        if (res.ok) {
+          setMessages((prev) =>
+            prev.map((m) => (m.id === msg.id ? { ...m, is_read: true } : m))
+          );
+        }
+      } catch (err) {
+        console.error("Failed to mark message as read:", err);
+      }
     }
   };
 
@@ -390,7 +436,7 @@ export default function AdminDashboard() {
               { id: "projects", label: "Projects", icon: FolderKanban },
               { id: "experience", label: "Experience", icon: Briefcase },
               { id: "skills", label: "Skills", icon: GraduationCap },
-              { id: "messages", label: "Messages", icon: Mail, count: messages.length },
+              { id: "messages", label: "Messages", icon: Mail, count: messages.filter(m => !m.is_read).length },
               { id: "settings", label: "Settings", icon: Settings },
             ].map((tab) => (
               <button
@@ -507,14 +553,25 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Description</label>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Description (English)</label>
                           <textarea
                             required
                             rows={3}
                             value={projectForm.description}
                             onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })}
                             className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue resize-none"
-                            placeholder="Describe this project briefly..."
+                            placeholder="Describe this project briefly in English..."
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Description (Indonesian)</label>
+                          <textarea
+                            required
+                            rows={3}
+                            value={projectForm.description_id}
+                            onChange={(e) => setProjectForm({ ...projectForm, description_id: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue resize-none"
+                            placeholder="Describe this project briefly in Indonesian..."
                           />
                         </div>
                         <div>
@@ -647,7 +704,7 @@ export default function AdminDashboard() {
                           {editingId ? "Edit Experience" : "Add Experience"}
                         </h3>
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Title</label>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Title (English)</label>
                           <input
                             type="text"
                             required
@@ -655,6 +712,17 @@ export default function AdminDashboard() {
                             onChange={(e) => setExpForm({ ...expForm, title: e.target.value })}
                             className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
                             placeholder="Software Engineer Intern"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Title (Indonesian)</label>
+                          <input
+                            type="text"
+                            required
+                            value={expForm.title_id}
+                            onChange={(e) => setExpForm({ ...expForm, title_id: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
+                            placeholder="Magang Rekayasa Perangkat Lunak"
                           />
                         </div>
                         <div>
@@ -691,14 +759,25 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Description</label>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Description (English)</label>
                           <input
                             type="text"
                             required
                             value={expForm.description}
                             onChange={(e) => setExpForm({ ...expForm, description: e.target.value })}
                             className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
-                            placeholder="Overall description of the job..."
+                            placeholder="Overall description of the job in English..."
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Description (Indonesian)</label>
+                          <input
+                            type="text"
+                            required
+                            value={expForm.description_id}
+                            onChange={(e) => setExpForm({ ...expForm, description_id: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
+                            placeholder="Deskripsi keseluruhan pekerjaan dalam Bahasa Indonesia..."
                           />
                         </div>
                         <div>
@@ -725,14 +804,25 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Highlights (one per line)</label>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Highlights - English (one per line)</label>
                           <textarea
                             required
-                            rows={4}
+                            rows={3}
                             value={expForm.highlights}
                             onChange={(e) => setExpForm({ ...expForm, highlights: e.target.value })}
                             className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue resize-none"
                             placeholder="Built X using Y&#10;Led team of size Z"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Highlights - Indonesian (one per line)</label>
+                          <textarea
+                            required
+                            rows={3}
+                            value={expForm.highlights_id}
+                            onChange={(e) => setExpForm({ ...expForm, highlights_id: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue resize-none"
+                            placeholder="Membangun X menggunakan Y&#10;Memimpin tim berukuran Z"
                           />
                         </div>
 
@@ -896,23 +986,68 @@ export default function AdminDashboard() {
                       <p className="text-xs text-[var(--text-muted)]">No messages received yet.</p>
                     ) : (
                       messages.map((msg) => (
-                        <div key={msg.id} className="glass-card p-5">
+                        <div 
+                          key={msg.id} 
+                          onClick={() => openMessage(msg)}
+                          className={`glass-card p-5 cursor-pointer hover:border-accent-blue/50 transition-all duration-300 relative group
+                            ${!msg.is_read ? "border-l-4 border-l-accent-emerald bg-accent-emerald/5" : ""}`}
+                        >
                           <div className="flex justify-between items-start gap-4 mb-3">
                             <div>
-                              <h4 className="text-sm font-semibold text-[var(--text-primary)]">{msg.name}</h4>
+                              <div className="flex items-center gap-2">
+                                <h4 className="text-sm font-semibold text-[var(--text-primary)]">{msg.name}</h4>
+                                {!msg.is_read && (
+                                  <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-accent-emerald text-white uppercase tracking-wider animate-pulse">
+                                    New
+                                  </span>
+                                )}
+                              </div>
                               <p className="text-xs text-accent-blue font-medium">{msg.email}</p>
                             </div>
                             <span className="text-[10px] text-[var(--text-muted)] font-mono">
                               {new Date(msg.created_at || Date.now()).toLocaleDateString()}
                             </span>
                           </div>
-                          <p className="text-xs text-[var(--text-secondary)] leading-relaxed bg-[var(--bg-secondary)] p-3 rounded-lg border border-[var(--border-color)]">
+                          <p className="text-xs text-[var(--text-secondary)] truncate">
                             {msg.message}
                           </p>
+                          <div className="text-[10px] text-accent-blue mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            Click to read full message &rarr;
+                          </div>
                         </div>
                       ))
                     )}
                   </div>
+
+                  {/* Modal Detail Message */}
+                  {selectedMessage && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                      <div className="glass-card w-full max-w-lg p-6 relative">
+                        <div className="flex justify-between items-start border-b border-[var(--border-color)] pb-3 mb-4">
+                          <div>
+                            <h3 className="text-base font-heading font-bold text-[var(--text-primary)]">
+                              From: {selectedMessage.name}
+                            </h3>
+                            <p className="text-xs text-accent-blue font-mono">{selectedMessage.email}</p>
+                          </div>
+                          <span className="text-xs text-[var(--text-muted)]">
+                            {new Date(selectedMessage.created_at || Date.now()).toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="max-h-60 overflow-y-auto bg-[var(--bg-secondary)] p-4 rounded-xl border border-[var(--border-color)] text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap">
+                          {selectedMessage.message}
+                        </div>
+                        <div className="flex justify-end mt-4">
+                          <button
+                            onClick={() => setSelectedMessage(null)}
+                            className="px-4 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-semibold text-[var(--text-primary)] hover:bg-[var(--border-color)]"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {/* --- SETTINGS TAB --- */}

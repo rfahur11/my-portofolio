@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Mail, ChevronDown, Download } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 import { GithubIcon as Github, LinkedinIcon as Linkedin } from "../icons";
 
 const socialLinks = [
@@ -41,6 +42,7 @@ const item = {
 };
 
 const HeroSection = () => {
+  const { language } = useLanguage();
   const [avatarUrl, setAvatarUrl] = React.useState("/images/avatar.jpg");
 
   React.useEffect(() => {
@@ -92,7 +94,7 @@ const HeroSection = () => {
         <div className="flex-1 text-center md:text-left">
           <motion.div variants={item}>
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium tracking-wider uppercase glass mb-6 text-accent-blue">
-              Available for opportunities
+              {language === "id" ? "Tersedia untuk peluang kerja" : "Available for opportunities"}
             </span>
           </motion.div>
 
@@ -100,13 +102,13 @@ const HeroSection = () => {
             variants={item}
             className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-tight mb-6"
           >
-            <span className="text-[var(--text-primary)]">Hi, I&apos;m </span>
+            <span className="text-[var(--text-primary)]">{language === "id" ? "Halo, Saya " : "Hi, I'm "}</span>
             <span className="text-gradient">Fahrur Rozi</span>
           </motion.h1>
 
           <motion.div variants={item} className="mb-6">
             <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium text-[var(--text-secondary)]">
-              <span>I&apos;m a </span>
+              <span>{language === "id" ? "Saya seorang " : "I'm a "}</span>
               <TypeAnimation
                 sequence={[
                   "Fullstack Developer",
@@ -130,9 +132,9 @@ const HeroSection = () => {
             variants={item}
             className="text-base sm:text-lg text-[var(--text-muted)] max-w-xl mx-auto md:mx-0 mb-8 leading-relaxed"
           >
-            Fullstack & Integration Engineer with ~2.5 years of experience architecting AI-powered systems,
-            resilient ERP pipelines, high-throughput backend services (Go/Fiber), and cross-platform apps.
-            Currently building automation & ML solutions at PT Bharata International Pharmaceutical.
+            {language === "id"
+              ? "Fullstack & Integration Engineer dengan ~2.5 tahun pengalaman merancang sistem berbasis AI, pipeline ERP tangguh, layanan backend throughput tinggi (Go/Fiber), dan aplikasi lintas platform. Saat ini membangun solusi otomatisasi & ML di PT Bharata International Pharmaceutical."
+              : "Fullstack & Integration Engineer with ~2.5 years of experience architecting AI-powered systems, resilient ERP pipelines, high-throughput backend services (Go/Fiber), and cross-platform apps. Currently building automation & ML solutions at PT Bharata International Pharmaceutical."}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -145,16 +147,16 @@ const HeroSection = () => {
               className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-blue to-accent-violet text-white font-medium text-sm shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-all duration-300 hover:scale-105"
             >
               <Mail size={18} />
-              Contact Me
+              {language === "id" ? "Hubungi Saya" : "Contact Me"}
             </a>
             <a
-              href="/resume.docx"
+              href={language === "id" ? "/cv-id.pdf" : "/cv-en.pdf"}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass font-medium text-sm text-[var(--text-primary)] hover:shadow-glow transition-all duration-300 hover:scale-105"
             >
               <Download size={18} />
-              Download CV
+              {language === "id" ? "Unduh CV" : "Download CV"}
             </a>
           </motion.div>
 

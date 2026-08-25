@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, X } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const categories = ["All", "Web", "Mobile", "Data", "Tools"];
 
@@ -60,6 +61,7 @@ const projects = [
 ];
 
 const ProjectSection = () => {
+  const { language } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeFilter, setActiveFilter] = useState("All");
@@ -95,14 +97,15 @@ const ProjectSection = () => {
           className="mb-12"
         >
           <span className="text-accent-violet text-sm font-medium tracking-wider uppercase">
-            My Work
+            {language === "id" ? "Karya Saya" : "My Work"}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold mt-2 text-[var(--text-primary)]">
-            Featured <span className="text-gradient">Projects</span>
+            {language === "id" ? "Proyek " : "Featured "}<span className="text-gradient">{language === "id" ? "Unggulan" : "Projects"}</span>
           </h2>
           <p className="text-[var(--text-muted)] mt-4 max-w-2xl text-base">
-            A collection of projects showcasing my skills in web development,
-            mobile apps, data analytics, and automation.
+            {language === "id"
+              ? "Kumpulan proyek yang menunjukkan keahlian saya dalam pengembangan web, aplikasi seluler, analitik data, dan otomatisasi."
+              : "A collection of projects showcasing my skills in web development, mobile apps, data analytics, and automation."}
           </p>
         </motion.div>
 
@@ -175,7 +178,7 @@ const ProjectSection = () => {
                       {project.title}
                     </h3>
                     <p className="text-sm text-[var(--text-muted)] mb-4 line-clamp-2 flex-1">
-                      {project.description}
+                      {language === "id" && project.description_id ? project.description_id : project.description}
                     </p>
 
                     {/* Tech Stack */}
@@ -239,7 +242,7 @@ const ProjectSection = () => {
                   {selectedProject.title}
                 </h3>
                 <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
-                  {selectedProject.description}
+                  {language === "id" && selectedProject.description_id ? selectedProject.description_id : selectedProject.description}
                 </p>
 
                 {/* Tech Stack */}

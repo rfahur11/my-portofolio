@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const experiences = [
   {
@@ -67,6 +68,7 @@ const experiences = [
 ];
 
 const ExperienceSection = () => {
+  const { language } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [experiences, setExperiences] = useState([]);
@@ -95,10 +97,10 @@ const ExperienceSection = () => {
           className="mb-16"
         >
           <span className="text-accent-emerald text-sm font-medium tracking-wider uppercase">
-            My Journey
+            {language === "id" ? "Perjalanan Saya" : "My Journey"}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold mt-2 text-[var(--text-primary)]">
-            Work <span className="text-gradient">Experience</span>
+            {language === "id" ? "Pengalaman " : "Work "}<span className="text-gradient">{language === "id" ? "Kerja" : "Experience"}</span>
           </h2>
         </motion.div>
 
@@ -148,7 +150,7 @@ const ExperienceSection = () => {
                       </div>
                       <div>
                         <h3 className="text-base font-heading font-semibold text-[var(--text-primary)] leading-snug">
-                          {exp.title}
+                          {language === "id" && exp.title_id ? exp.title_id : exp.title}
                         </h3>
                         <p className="text-sm text-accent-blue mt-0.5">
                           {exp.organization}
@@ -161,12 +163,12 @@ const ExperienceSection = () => {
 
                     {/* Description */}
                     <p className="text-sm text-[var(--text-muted)] mb-4">
-                      {exp.description}
+                      {language === "id" && exp.description_id ? exp.description_id : exp.description}
                     </p>
 
                     {/* Highlights */}
                     <ul className="space-y-2">
-                      {exp.highlights.map((highlight, i) => (
+                      {(language === "id" && exp.highlights_id && exp.highlights_id.length > 0 ? exp.highlights_id : exp.highlights).map((highlight, i) => (
                         <li
                           key={i}
                           className="flex items-start gap-2 text-sm text-[var(--text-secondary)]"
