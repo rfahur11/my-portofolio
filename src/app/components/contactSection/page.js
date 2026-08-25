@@ -10,57 +10,65 @@ import {
   CheckCircle,
   Loader2,
 } from "lucide-react";
-import { GithubIcon as Github, LinkedinIcon as Linkedin } from "../icons";
-
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "rfahrur6045@gmail.com",
-    href: "mailto:rfahrur6045@gmail.com",
-    color: "text-accent-rose",
-    bgColor: "bg-accent-rose/10",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+62 895 3801 46029",
-    href: "tel:+62895380146029",
-    color: "text-accent-emerald",
-    bgColor: "bg-accent-emerald/10",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Indonesia",
-    href: null,
-    color: "text-accent-blue",
-    bgColor: "bg-accent-blue/10",
-  },
-];
-
-const socialLinks = [
-  {
-    icon: Github,
-    href: "https://github.com/rfahur11",
-    label: "GitHub",
-    hoverColor: "hover:bg-gray-800 hover:text-white dark:hover:bg-white dark:hover:text-gray-900",
-  },
-  {
-    icon: Linkedin,
-    href: "https://www.linkedin.com/in/fahrur-rozi-336b04164/",
-    label: "LinkedIn",
-    hoverColor: "hover:bg-[#0077B5] hover:text-white",
-  },
-  {
-    icon: Mail,
-    href: "mailto:rfahrur6045@gmail.com",
-    label: "Email",
-    hoverColor: "hover:bg-accent-rose hover:text-white",
-  },
-];
+import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon } from "../icons";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const ContactSection = () => {
+  const { language } = useLanguage();
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: "rfahrur6045@gmail.com",
+      href: "mailto:rfahrur6045@gmail.com",
+      color: "text-accent-rose",
+      bgColor: "bg-accent-rose/10",
+    },
+    {
+      icon: Phone,
+      label: language === "id" ? "Nomor HP / WA" : "Phone / WA",
+      value: "+62 895 3801 46029",
+      href: "https://wa.me/62895380146029",
+      color: "text-accent-emerald",
+      bgColor: "bg-accent-emerald/10",
+    },
+    {
+      icon: MapPin,
+      label: language === "id" ? "Lokasi" : "Location",
+      value: language === "id" ? "Cilacap, Jawa Tengah, Indonesia" : "Cilacap, Central Java, Indonesia",
+      href: null,
+      color: "text-accent-blue",
+      bgColor: "bg-accent-blue/10",
+    },
+  ];
+
+  const socialLinks = [
+    {
+      icon: Github,
+      href: "https://github.com/rfahur11",
+      label: "GitHub",
+      hoverColor: "hover:bg-gray-800 hover:text-white dark:hover:bg-white dark:hover:text-gray-900",
+    },
+    {
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/fahrur-rozi-k-336b04164/",
+      label: "LinkedIn",
+      hoverColor: "hover:bg-[#0077B5] hover:text-white",
+    },
+    {
+      icon: WhatsappIcon,
+      href: "https://wa.me/62895380146029",
+      label: "WhatsApp",
+      hoverColor: "hover:bg-[#25D366] hover:text-white",
+    },
+    {
+      icon: Mail,
+      href: "mailto:rfahrur6045@gmail.com",
+      label: "Email",
+      hoverColor: "hover:bg-accent-rose hover:text-white",
+    },
+  ];
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [formData, setFormData] = useState({

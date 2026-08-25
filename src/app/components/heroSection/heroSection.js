@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Mail, ChevronDown, Download } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
-import { GithubIcon as Github, LinkedinIcon as Linkedin } from "../icons";
+import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon } from "../icons";
 
 const socialLinks = [
   {
@@ -16,9 +16,15 @@ const socialLinks = [
   },
   {
     icon: Linkedin,
-    href: "https://www.linkedin.com/in/fahrur-rozi-336b04164/",
+    href: "https://www.linkedin.com/in/fahrur-rozi-k-336b04164/",
     label: "LinkedIn",
     color: "hover:text-white hover:bg-[#0077B5]",
+  },
+  {
+    icon: WhatsappIcon,
+    href: "https://wa.me/62895380146029",
+    label: "WhatsApp",
+    color: "hover:text-white hover:bg-[#25D366]",
   },
   {
     icon: Mail,
