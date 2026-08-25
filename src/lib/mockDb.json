@@ -2,113 +2,111 @@
   "projects": [
     {
       "id": 1,
-      "title": "FlyTicket — Flight Booking",
-      "imageUrl": "/flyTicket.png",
-      "link": "https://flyticket.netlify.app/",
-      "description": "Full-featured website to book flight tickets. Capstone project from Binar Academy MSIB Batch 4. Built with React.js and deployed on Netlify.",
-      "techStack": [
-        "React.js",
-        "Node.js",
-        "REST API"
-      ],
-      "category": "Web"
+      "title": "LarisAI — Smart POS & AI Stock Prediction",
+      "imageUrl": "/placeholder-project.png",
+      "link": "https://github.com/rfahur11",
+      "description": "Cross-platform Smart POS system (Web & Electron Desktop App) for MSMEs with AI/ML predictive models for stock forecasting and automated smart marketing campaign recommendations.",
+      "techStack": ["Electron", "Next.js", "TypeScript", "Go (Fiber)", "Python", "MongoDB"],
+      "category": "AI/ML"
     },
     {
       "id": 2,
+      "title": "Enterprise ERP & Data Integration Platform",
+      "imageUrl": "/placeholder-project.png",
+      "link": "https://github.com/rfahur11",
+      "description": "Internal ERP modules automating inventory management, multi-currency financial reporting, and high-throughput Webhook gateways for multi-marketplace channels with idempotent ingestion pipeline.",
+      "techStack": ["Go (Fiber)", "Next.js", "React", "Java", "MongoDB", "REST API"],
+      "category": "Backend"
+    },
+    {
+      "id": 3,
+      "title": "Task Management System — Go Microservice",
+      "imageUrl": "/placeholder-project.png",
+      "link": "https://github.com/rfahur11",
+      "description": "High-performance Go microservice with multi-role RBAC authentication and soft-archival mechanisms for secure multi-tenant data isolation.",
+      "techStack": ["Go (Fiber)", "MongoDB", "JWT", "RBAC"],
+      "category": "Backend"
+    },
+    {
+      "id": 4,
+      "title": "Caraka — Javanese Script ML App",
+      "imageUrl": "/carakaMobile.jpg",
+      "link": "https://mega.nz/file/df9TCIaK#GVV4GWSJ_eYaaQoMvO4VDJson6ALVY7hygZsVQZef1Y",
+      "description": "Android app educating elementary students about Javanese script using ML-powered character recognition. Bangkit Academy MSIB Batch 6 capstone project.",
+      "techStack": ["TensorFlow Lite", "Keras", "Android", "Kotlin"],
+      "category": "Mobile"
+    },
+    {
+      "id": 5,
+      "title": "FlyTicket — Flight Booking Platform",
+      "imageUrl": "/flyTicket.png",
+      "link": "https://flyticket.netlify.app/",
+      "description": "Full-featured website to book flight tickets. Capstone project from Binar Academy MSIB Batch 4. Built with React.js and deployed on Netlify.",
+      "techStack": ["React.js", "Node.js", "REST API"],
+      "category": "Web"
+    },
+    {
+      "id": 6,
       "title": "E-Commerce Analytics Dashboard",
       "imageUrl": "/e-commerce.png",
       "link": "https://data-ecommerce.streamlit.app/",
       "description": "Interactive data analytics dashboard built with Python to extract actionable insights from e-commerce sample data. Deployed on Streamlit Cloud.",
-      "techStack": [
-        "Python",
-        "Streamlit",
-        "Pandas",
-        "Matplotlib"
-      ],
+      "techStack": ["Python", "Streamlit", "Pandas", "Matplotlib"],
       "category": "Data"
     },
     {
-      "id": 3,
-      "title": "Caraka — Javanese Script Learning",
-      "imageUrl": "/carakaMobile.jpg",
-      "link": "https://mega.nz/file/df9TCIaK#GVV4GWSJ_eYaaQoMvO4VDJson6ALVY7hygZsVQZef1Y",
-      "description": "Android app educating elementary students about Javanese script using ML-powered recognition. Bangkit Academy MSIB Batch 6 capstone project.",
-      "techStack": [
-        "TensorFlow Lite",
-        "Keras",
-        "Android",
-        "Kotlin"
-      ],
-      "category": "Mobile"
-    },
-    {
-      "id": 4,
-      "title": "Stock Management System",
+      "id": 7,
+      "title": "Stock & Letters Management System",
       "imageUrl": "/vba-stock.png",
       "link": "https://docs.google.com/spreadsheets/d/1gg4H02IjGb1D9wStSXTSn1rb4x6WV9GG/edit?usp=sharing&ouid=103583580848086143171&rtpof=true&sd=true",
       "description": "VBA-powered Excel information system optimizing stock management at Bantarsari Health Center. Achieved 30% productivity increase.",
-      "techStack": [
-        "VBA",
-        "Excel",
-        "Automation"
-      ],
-      "category": "Tools"
-    },
-    {
-      "id": 5,
-      "title": "Letters Management System",
-      "imageUrl": "/vba-letter.png",
-      "link": "https://docs.google.com/spreadsheets/d/13y6N0kSHGIqXUFyAdYU2-OXcvYysZWw1/edit?usp=sharing&ouid=103583580848086143171&rtpof=true&sd=true",
-      "description": "Automated letter management system using VBA macro, streamlining correspondence processes at Bantarsari Health Center.",
-      "techStack": [
-        "VBA",
-        "Excel",
-        "Automation"
-      ],
+      "techStack": ["VBA", "Excel", "Automation"],
       "category": "Tools"
     }
   ],
   "experiences": [
     {
       "id": 1,
-      "title": "Bangkit Academy 2024 — Machine Learning Path",
-      "organization": "Bangkit Academy, MSIB Batch 6",
-      "location": "Bandung, West Java",
-      "icon": "/bangkit.png",
-      "period": "Feb 2024 — Jun 2024",
-      "description": "Intensive program on machine learning and data analytics, powered by Google, GoTo, and Traveloka.",
+      "title": "Full Stack Developer",
+      "organization": "PT Bharata International Pharmaceutical",
+      "location": "Kecamatan Cipari, Central Java",
+      "icon": "/placeholder-logo.png",
+      "period": "Jan 2024 — Present",
+      "description": "Designing and implementing AI-powered automation systems to enhance business operations efficiency and support data-driven decision-making.",
       "highlights": [
-        "Mastered ML concepts through Coursera and Dicoding platforms, including deep learning, computer vision, and NLP",
-        "Developed capstone project: Caraka — Javanese script learning app with TensorFlow Lite model for character recognition",
-        "Collaborated with Cloud Computing and Android teams across disciplines"
+        "Resolved critical Shopee Open API rate-limiting failures, restoring 100% order sync stability under active vendor code freeze",
+        "Engineered idempotent asynchronous order-ingestion pipeline for multi-marketplace channels with retry backoff and dead-letter queue recovery",
+        "Trained and deployed Computer Vision model for automated skin analysis in R&D product workflows",
+        "Built enterprise financial modules in Java & React, automating cash flow tracking and administrative efficiency",
+        "Established API contract standards including request versioning, error taxonomy, and automated test gates"
       ]
     },
     {
       "id": 2,
-      "title": "Teaching & Administrative Staff",
-      "organization": "SMKN 2 Purwakarta",
-      "location": "Purwakarta, West Java",
-      "icon": "/logo_smekda.png",
-      "period": "Aug 2023 — Dec 2023",
-      "description": "Internship as teaching and administrative staff at state vocational high school.",
+      "title": "Machine Learning — Bangkit Academy",
+      "organization": "Dicoding Academy / Bangkit, MSIB Batch 6",
+      "location": "Bandung, West Java",
+      "icon": "/bangkit.png",
+      "period": "Feb 2024 — Jun 2024",
+      "description": "Intensive ML program powered by Google, GoTo, and Traveloka. Mastered machine learning, deep learning, and computer vision.",
       "highlights": [
-        "Instructed Computer and Network Engineering for 10th-grade students using the Merdeka Curriculum",
-        "Collaborated with administrative team to enhance school operational processes",
-        "Cultivated a positive learning environment and gained deep understanding of education dynamics"
+        "Mastered ML concepts through Coursera and Dicoding platforms including deep learning, computer vision, and NLP",
+        "Developed capstone project: Caraka — Javanese script learning app with TensorFlow Lite model for character recognition",
+        "Collaborated with Cloud Computing and Android teams in cross-disciplinary capstone development"
       ]
     },
     {
       "id": 3,
-      "title": "IT Staff",
-      "organization": "Puskesmas Bantarsari",
-      "location": "Cilacap, Central Java",
-      "icon": "/logo-puskesmas.png",
-      "period": "Jul 2022 — Oct 2022",
-      "description": "IT internship managing digital infrastructure at a public health center.",
+      "title": "Teacher Assistant",
+      "organization": "SMK N 2 Purwakarta",
+      "location": "Purwakarta, West Java",
+      "icon": "/logo_smekda.png",
+      "period": "Jun 2023 — Oct 2023",
+      "description": "Internship as IT teacher assistant at state vocational high school, teaching Technical Drawing (TJKT) to 10th-grade students.",
       "highlights": [
-        "Managed and published the health center's website, achieving 20% increase in user engagement within 3 months",
-        "Built VBA-based Excel information system for stock management, increasing productivity by 30%",
-        "Developed automated letters management system to streamline administrative correspondence"
+        "Instructed Technical Drawing (TJKT) and Computer & Network Engineering for 10th-grade students",
+        "Collaborated with administrative team to enhance school operational processes",
+        "Cultivated a positive learning environment and gained deep understanding of education dynamics"
       ]
     },
     {
@@ -118,115 +116,141 @@
       "location": "Tangerang, Banten",
       "icon": "/binar_academy_logo.jpeg",
       "period": "Feb 2023 — Jun 2023",
-      "description": "Intensive fullstack web development program with JavaScript (React.js & Next.js).",
+      "description": "Intensive fullstack web development bootcamp with JavaScript ecosystem (React.js & Next.js).",
       "highlights": [
         "Mastered fullstack web development concepts through virtual learning platforms",
         "Built capstone project: FlyTicket — a flight ticket booking website deployed on Netlify",
-        "Enhanced collaboration and soft skills through group project development"
+        "Enhanced collaboration and soft skills through cross-team project development"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "IT Support Assistant",
+      "organization": "Puskesmas Bantarsari",
+      "location": "Cilacap, Central Java",
+      "icon": "/logo-puskesmas.png",
+      "period": "Jun 2022 — Dec 2022",
+      "description": "IT internship managing digital infrastructure at Bantarsari Public Health Center.",
+      "highlights": [
+        "Managed and published the health center's website, achieving 20% increase in user engagement within 3 months",
+        "Built VBA-based Excel system for stock management, increasing staff productivity by 30%",
+        "Developed automated letters management system to streamline administrative correspondence"
       ]
     }
   ],
   "skills": [
     {
       "id": 1,
-      "name": "React.js",
-      "level": 85,
-      "category": "Frontend"
+      "name": "Go (Fiber)",
+      "level": 82,
+      "category": "Backend"
     },
     {
       "id": 2,
-      "name": "Next.js",
-      "level": 80,
-      "category": "Frontend"
+      "name": "Node.js",
+      "level": 78,
+      "category": "Backend"
     },
     {
       "id": 3,
-      "name": "HTML/CSS",
-      "level": 90,
-      "category": "Frontend"
+      "name": "REST API",
+      "level": 88,
+      "category": "Backend"
     },
     {
       "id": 4,
-      "name": "TailwindCSS",
-      "level": 85,
-      "category": "Frontend"
+      "name": "Java",
+      "level": 70,
+      "category": "Backend"
     },
     {
       "id": 5,
-      "name": "JavaScript",
-      "level": 85,
-      "category": "Frontend"
+      "name": "MongoDB",
+      "level": 80,
+      "category": "Backend"
     },
     {
       "id": 6,
-      "name": "Node.js",
-      "level": 70,
+      "name": "PostgreSQL",
+      "level": 68,
       "category": "Backend"
     },
     {
       "id": 7,
-      "name": "REST API",
-      "level": 75,
-      "category": "Backend"
+      "name": "React.js",
+      "level": 88,
+      "category": "Frontend"
     },
     {
       "id": 8,
-      "name": "PostgreSQL",
-      "level": 65,
-      "category": "Backend"
+      "name": "Next.js",
+      "level": 85,
+      "category": "Frontend"
     },
     {
       "id": 9,
-      "name": "Express.js",
-      "level": 70,
-      "category": "Backend"
+      "name": "TypeScript",
+      "level": 80,
+      "category": "Frontend"
     },
     {
       "id": 10,
-      "name": "TensorFlow",
-      "level": 75,
-      "category": "Machine Learning"
+      "name": "HTML/CSS",
+      "level": 92,
+      "category": "Frontend"
     },
     {
       "id": 11,
-      "name": "Keras",
-      "level": 75,
-      "category": "Machine Learning"
+      "name": "Electron",
+      "level": 72,
+      "category": "Frontend"
     },
     {
       "id": 12,
       "name": "Python",
-      "level": 80,
+      "level": 83,
       "category": "Machine Learning"
     },
     {
       "id": 13,
-      "name": "Data Analysis",
-      "level": 70,
+      "name": "TensorFlow / Keras",
+      "level": 78,
       "category": "Machine Learning"
     },
     {
       "id": 14,
-      "name": "Figma",
-      "level": 80,
-      "category": "Tools"
+      "name": "Computer Vision",
+      "level": 72,
+      "category": "Machine Learning"
     },
     {
       "id": 15,
-      "name": "Git & GitHub",
-      "level": 85,
-      "category": "Tools"
+      "name": "AutoML / MLOps",
+      "level": 68,
+      "category": "Machine Learning"
     },
     {
       "id": 16,
-      "name": "VS Code",
-      "level": 90,
+      "name": "Git & GitHub",
+      "level": 88,
       "category": "Tools"
     },
     {
       "id": 17,
+      "name": "Docker",
+      "level": 70,
+      "category": "Tools"
+    },
+    {
+      "id": 18,
       "name": "VBA Excel",
-      "level": 75,
+      "level": 80,
+      "category": "Tools"
+    },
+    {
+      "id": 19,
+      "name": "Figma",
+      "level": 78,
       "category": "Tools"
     }
   ],

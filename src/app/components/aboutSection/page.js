@@ -5,9 +5,9 @@ import { motion, useInView } from "framer-motion";
 import { GraduationCap, MapPin, Code2, Briefcase } from "lucide-react";
 
 const stats = [
-  { label: "Projects", value: "5+", icon: Code2 },
-  { label: "Experiences", value: "4+", icon: Briefcase },
-  { label: "Fresh Graduate", value: "2024", icon: GraduationCap },
+  { label: "Projects Completed", value: "7+", icon: Code2 },
+  { label: "Work Experiences", value: "5", icon: Briefcase },
+  { label: "Graduated Year", value: "2024", icon: GraduationCap },
 ];
 
 const AboutSection = () => {
@@ -44,33 +44,25 @@ const AboutSection = () => {
             className="lg:col-span-3 space-y-6"
           >
             <p className="text-lg leading-relaxed text-[var(--text-secondary)]">
-              Fresh graduate from{" "}
+              Fullstack & Integration Engineer with ~2.5 years of experience based in{" "}
               <span className="font-semibold text-[var(--text-primary)]">
-                Indonesia University of Education
+                Central Java, Indonesia
               </span>
-              , majoring in Information and System Technology. Currently a
-              freelance developer passionate about solving real-world problems
-              through technology.
+              . I specialize in architecting AI-powered POS systems, resilient ERP pipelines, high-throughput backend services, and cross-platform applications.
             </p>
 
             <p className="text-base leading-relaxed text-[var(--text-muted)]">
-              A self-taught fullstack web developer with a strong interest in
-              machine learning and data-driven solutions. I believe in building
-              meaningful and delightful digital products that create an
-              equilibrium between user needs and business goals.
+              With a solid foundation in Information Systems Education from Indonesia University of Education, I have built tech solutions ranging from clinical workflow automation to complex marketplace order-ingestion systems. I am passionate about streamlining operations, integrating intelligent ML models into real-world applications, and creating efficient workflows.
             </p>
 
             <p className="text-base leading-relaxed text-[var(--text-muted)]">
-              I&apos;m always eager to learn new technologies and collaborate
-              with talented people. Whether it&apos;s crafting responsive web
-              interfaces, building intelligent ML models, or designing
-              user-centric experiences — I&apos;m all in.
+              I actively work with technologies like Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, and MongoDB. I look forward to contributing to projects where technology acts as a bridge to automation and operational efficiency.
             </p>
 
             {/* Location */}
             <div className="flex items-center gap-2 text-[var(--text-muted)]">
               <MapPin size={16} className="text-accent-blue" />
-              <span className="text-sm">Indonesia</span>
+              <span className="text-sm">Cilacap Regency, Central Java, Indonesia</span>
             </div>
           </motion.div>
 
@@ -119,10 +111,10 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-[var(--text-primary)]">
-                    S.Pd. Information & System Technology
+                    B.Ed. Information & System Information Technology
                   </div>
                   <div className="text-xs text-[var(--text-muted)] mt-1">
-                    Indonesia University of Education
+                    Universitas Pendidikan Indonesia (2020 - 2024)
                   </div>
                 </div>
               </div>

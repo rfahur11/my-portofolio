@@ -94,13 +94,13 @@ const HeroSection = () => {
               <span>I&apos;m a </span>
               <TypeAnimation
                 sequence={[
-                  "Software Engineer",
-                  2000,
                   "Fullstack Developer",
                   2000,
-                  "ML Enthusiast",
+                  "AI Native Engineer",
                   2000,
-                  "Problem Solver",
+                  "MLOps Engineer",
+                  2000,
+                  "Backend Engineer",
                   2000,
                 ]}
                 wrapper="span"
@@ -115,9 +115,9 @@ const HeroSection = () => {
             variants={item}
             className="text-base sm:text-lg text-[var(--text-muted)] max-w-xl mx-auto md:mx-0 mb-8 leading-relaxed"
           >
-            A self-taught fullstack developer passionate about building
-            meaningful digital products that create an equilibrium between user
-            needs and business goals.
+            Fullstack & Integration Engineer with ~2.5 years of experience architecting AI-powered systems,
+            resilient ERP pipelines, high-throughput backend services (Go/Fiber), and cross-platform apps.
+            Currently building automation & ML solutions at PT Bharata International Pharmaceutical.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -133,7 +133,7 @@ const HeroSection = () => {
               Contact Me
             </a>
             <a
-              href="/resume.pdf"
+              href="/resume.docx"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass font-medium text-sm text-[var(--text-primary)] hover:shadow-glow transition-all duration-300 hover:scale-105"
@@ -170,7 +170,7 @@ const HeroSection = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-accent-blue via-accent-violet to-accent-cyan rounded-full animate-spin-slow opacity-75 blur-sm" />
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--bg-primary)]">
               <img
-                src="/picture.png"
+                src="/images/avatar.jpg"
                 alt="Fahrur Rozi"
                 className="w-full h-full object-cover"
               />
@@ -194,7 +194,7 @@ const HeroSection = () => {
               }}
               className="absolute -bottom-4 -left-4 px-3 py-1.5 rounded-lg glass-card text-xs font-medium text-accent-emerald"
             >
-              💻 5+ Projects
+              💻 2.5yr Experience
             </motion.div>
           </div>
         </motion.div>
