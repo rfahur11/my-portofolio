@@ -9,12 +9,16 @@ import SkillSection from "./components/skillSection/page";
 import ContactSection from "./components/contactSection/page";
 import Footer from "./components/footer/page";
 
-export default function Home() {
+import { getSetting } from "@/lib/db";
+
+export default async function Home() {
+  const avatarUrl = await getSetting("avatarUrl") || "/images/avatar.jpg";
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] transition-colors duration-300">
       <Navbar />
       <main>
-        <HeroSection />
+        <HeroSection initialAvatarUrl={avatarUrl} />
         <AboutSection />
         <ProjectSection />
         <ExperienceSection />

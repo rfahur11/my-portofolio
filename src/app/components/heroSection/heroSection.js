@@ -41,9 +41,9 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const HeroSection = () => {
+const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
   const { language } = useLanguage();
-  const [avatarUrl, setAvatarUrl] = React.useState("/images/avatar.jpg");
+  const [avatarUrl, setAvatarUrl] = React.useState(initialAvatarUrl);
 
   React.useEffect(() => {
     fetch("/api/settings?key=avatarUrl")
