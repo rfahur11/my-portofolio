@@ -10,7 +10,7 @@ import {
   CheckCircle,
   Loader2,
 } from "lucide-react";
-import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon } from "../icons";
+import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon, XIcon, MediumIcon } from "../icons";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const ContactSection = () => {
@@ -61,6 +61,18 @@ const ContactSection = () => {
       href: "https://wa.me/62895380146029",
       label: "WhatsApp",
       hoverColor: "hover:bg-[#25D366] hover:text-white",
+    },
+    {
+      icon: XIcon,
+      href: "https://x.com/FahrurR41870299",
+      label: "X",
+      hoverColor: "hover:bg-gray-800 hover:text-white",
+    },
+    {
+      icon: MediumIcon,
+      href: "https://medium.com/@rfahrur6045",
+      label: "Medium",
+      hoverColor: "hover:bg-[#12100E] hover:text-white",
     },
     {
       icon: Mail,

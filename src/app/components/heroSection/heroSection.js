@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Mail, ChevronDown, Download } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
-import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon } from "../icons";
+import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon, XIcon, MediumIcon } from "../icons";
 
 const socialLinks = [
   {
@@ -25,6 +25,18 @@ const socialLinks = [
     href: "https://wa.me/62895380146029",
     label: "WhatsApp",
     color: "hover:text-white hover:bg-[#25D366]",
+  },
+  {
+    icon: XIcon,
+    href: "https://x.com/FahrurR41870299",
+    label: "X",
+    color: "hover:text-white hover:bg-gray-800",
+  },
+  {
+    icon: MediumIcon,
+    href: "https://medium.com/@rfahrur6045",
+    label: "Medium",
+    color: "hover:text-white hover:bg-[#12100E]",
   },
   {
     icon: Mail,

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Mail, ArrowUp, Heart } from "lucide-react";
-import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon } from "../icons";
+import { GithubIcon as Github, LinkedinIcon as Linkedin, WhatsappIcon, XIcon, MediumIcon } from "../icons";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const Footer = () => {
@@ -27,6 +27,16 @@ const Footer = () => {
       icon: WhatsappIcon,
       href: "https://wa.me/62895380146029",
       label: "WhatsApp",
+    },
+    {
+      icon: XIcon,
+      href: "https://x.com/FahrurR41870299",
+      label: "X",
+    },
+    {
+      icon: MediumIcon,
+      href: "https://medium.com/@rfahrur6045",
+      label: "Medium",
     },
     { icon: Mail, href: "mailto:rfahrur6045@gmail.com", label: "Email" },
   ];
