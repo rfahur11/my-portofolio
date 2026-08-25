@@ -179,24 +179,26 @@ export const insertItem = async (table, item) => {
 
 export const updateItem = async (table, id, item) => {
   const numericId = Number(id);
+  const finalId = isNaN(numericId) || String(id).trim() === "" ? id : numericId;
   if (isSupabaseConfigured) {
-    const { data, error } = await supabase.from(table).update(item).eq("id", numericId).select();
+    const { data, error } = await supabase.from(table).update(item).eq("id", finalId).select();
     if (!error) return data[0];
   }
   const local = loadLocalData();
-  local[table] = (local[table] || []).map((x) => (x.id === numericId ? { ...x, ...item } : x));
+  local[table] = (local[table] || []).map((x) => (x.id === finalId ? { ...x, ...item } : x));
   saveLocalData(local);
-  return { ...item, id: numericId };
+  return { ...item, id: finalId };
 };
 
 export const deleteItem = async (table, id) => {
   const numericId = Number(id);
+  const finalId = isNaN(numericId) || String(id).trim() === "" ? id : numericId;
   if (isSupabaseConfigured) {
-    const { error } = await supabase.from(table).delete().eq("id", numericId);
+    const { error } = await supabase.from(table).delete().eq("id", finalId);
     if (!error) return true;
   }
   const local = loadLocalData();
-  local[table] = (local[table] || []).filter((x) => x.id !== numericId);
+  local[table] = (local[table] || []).filter((x) => x.id !== finalId);
   saveLocalData(local);
   return true;
 };
