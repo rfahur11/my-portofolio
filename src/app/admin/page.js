@@ -138,7 +138,7 @@ export default function AdminDashboard() {
     
     // Poll for new messages every 10 seconds for real-time updates
     const interval = setInterval(() => {
-      fetch("/api/contact")
+      fetch("/api/contact", { cache: "no-store" })
         .then((res) => {
           if (res.ok) return res.json();
         })
@@ -155,11 +155,11 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const [projRes, expRes, skillRes, msgRes, setRes] = await Promise.all([
-        fetch("/api/projects"),
-        fetch("/api/experiences"),
-        fetch("/api/skills"),
-        fetch("/api/contact"),
-        fetch("/api/settings?key=avatarUrl"),
+        fetch("/api/projects", { cache: "no-store" }),
+        fetch("/api/experiences", { cache: "no-store" }),
+        fetch("/api/skills", { cache: "no-store" }),
+        fetch("/api/contact", { cache: "no-store" }),
+        fetch("/api/settings?key=avatarUrl", { cache: "no-store" }),
       ]);
 
       if (projRes.ok) setProjects(await projRes.json());
