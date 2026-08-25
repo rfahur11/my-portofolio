@@ -41,6 +41,21 @@ const item = {
 };
 
 const HeroSection = () => {
+  const [avatarUrl, setAvatarUrl] = React.useState("/images/avatar.jpg");
+
+  React.useEffect(() => {
+    fetch("/api/settings?key=avatarUrl")
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then((data) => {
+        if (data && data.value) {
+          setAvatarUrl(data.value);
+        }
+      })
+      .catch((err) => console.error("Error loading avatarUrl:", err));
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
@@ -170,7 +185,7 @@ const HeroSection = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-accent-blue via-accent-violet to-accent-cyan rounded-full animate-spin-slow opacity-75 blur-sm" />
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--bg-primary)]">
               <img
-                src="/images/avatar.jpg"
+                src={avatarUrl}
                 alt="Fahrur Rozi"
                 className="w-full h-full object-cover"
               />

@@ -254,5 +254,12 @@
       "category": "Tools"
     }
   ],
-  "contacts": []
+  "contacts": [],
+  "settings": [
+    {
+      "id": 1,
+      "key": "avatarUrl",
+      "value": "/images/avatar.jpg"
+    }
+  ]
 }

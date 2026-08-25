@@ -17,8 +17,56 @@ import {
   Loader2,
   CheckCircle,
   Eye,
+  Settings,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const compressImage = (file, maxWidth = 800, maxHeight = 800, quality = 0.8) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            resolve(
+              new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              })
+            );
+          },
+          "image/jpeg",
+          quality
+        );
+      };
+    };
+  });
+};
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -29,6 +77,7 @@ export default function AdminDashboard() {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("/images/avatar.jpg");
   const router = useRouter();
 
   // Form states
@@ -47,6 +96,7 @@ export default function AdminDashboard() {
     period: "",
     description: "",
     highlights: "",
+    icon: "/placeholder-logo.png",
   });
   const [skillForm, setSkillForm] = useState({
     name: "",
@@ -56,6 +106,28 @@ export default function AdminDashboard() {
 
   const [editingId, setEditingId] = useState(null);
 
+  const handleFileUpload = async (file, onUploadSuccess, folder = "general") => {
+    try {
+      const maxWidth = folder === "avatar" ? 400 : 800;
+      const compressed = await compressImage(file, maxWidth, maxWidth, 0.85);
+
+      const formData = new FormData();
+      formData.append("file", compressed);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      onUploadSuccess(data.url);
+      showToast("Image uploaded and compressed successfully!");
+    } catch (err) {
+      showToast(err.message, "error");
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -63,17 +135,22 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [projRes, expRes, skillRes, msgRes] = await Promise.all([
+      const [projRes, expRes, skillRes, msgRes, setRes] = await Promise.all([
         fetch("/api/projects"),
         fetch("/api/experiences"),
         fetch("/api/skills"),
         fetch("/api/contact"),
+        fetch("/api/settings?key=avatarUrl"),
       ]);
 
       if (projRes.ok) setProjects(await projRes.json());
       if (expRes.ok) setExperiences(await expRes.json());
       if (skillRes.ok) setSkills(await skillRes.json());
       if (msgRes.ok) setMessages(await msgRes.json());
+      if (setRes.ok) {
+        const val = await setRes.json();
+        if (val && val.value) setAvatarUrl(val.value);
+      }
     } catch (err) {
       setError("Failed to load CMS data.");
     } finally {
@@ -196,6 +273,7 @@ export default function AdminDashboard() {
       period: "",
       description: "",
       highlights: "",
+      icon: "/placeholder-logo.png",
     });
     setEditingId(null);
   };
@@ -209,6 +287,7 @@ export default function AdminDashboard() {
       period: e.period,
       description: e.description,
       highlights: e.highlights.join("\n"),
+      icon: e.icon || "/placeholder-logo.png",
     });
   };
 
@@ -312,6 +391,7 @@ export default function AdminDashboard() {
               { id: "experience", label: "Experience", icon: Briefcase },
               { id: "skills", label: "Skills", icon: GraduationCap },
               { id: "messages", label: "Messages", icon: Mail, count: messages.length },
+              { id: "settings", label: "Settings", icon: Settings },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -438,14 +518,26 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Image URL</label>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Project Image (Upload or URL)</label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) {
+                                handleFileUpload(e.target.files[0], (url) => {
+                                  setProjectForm({ ...projectForm, imageUrl: url });
+                                }, "projects");
+                              }
+                            }}
+                            className="w-full text-xs text-[var(--text-muted)] mb-2"
+                          />
                           <input
                             type="text"
                             required
                             value={projectForm.imageUrl}
                             onChange={(e) => setProjectForm({ ...projectForm, imageUrl: e.target.value })}
                             className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
-                            placeholder="/flyTicket.png"
+                            placeholder="/flyTicket.png or https://..."
                           />
                         </div>
                         <div>
@@ -607,6 +699,29 @@ export default function AdminDashboard() {
                             onChange={(e) => setExpForm({ ...expForm, description: e.target.value })}
                             className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
                             placeholder="Overall description of the job..."
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">Organization Logo (Upload or URL)</label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) {
+                                handleFileUpload(e.target.files[0], (url) => {
+                                  setExpForm({ ...expForm, icon: url });
+                                }, "experiences");
+                              }
+                            }}
+                            className="w-full text-xs text-[var(--text-muted)] mb-2"
+                          />
+                          <input
+                            type="text"
+                            required
+                            value={expForm.icon}
+                            onChange={(e) => setExpForm({ ...expForm, icon: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
+                            placeholder="/logo-company.png or https://..."
                           />
                         </div>
                         <div>
@@ -797,6 +912,48 @@ export default function AdminDashboard() {
                         </div>
                       ))
                     )}
+                  </div>
+                </div>
+              )}
+              {/* --- SETTINGS TAB --- */}
+              {activeTab === "settings" && (
+                <div>
+                  <h1 className="text-2xl font-heading font-bold text-[var(--text-primary)] mb-8">
+                    Global Settings
+                  </h1>
+                  <div className="glass-card p-6 max-w-xl space-y-6">
+                    <h3 className="text-base font-heading font-semibold text-[var(--text-primary)] border-b border-[var(--border-color)] pb-3">
+                      Hero Section Profile Picture
+                    </h3>
+                    <div className="flex items-center gap-6">
+                      <img
+                        src={avatarUrl}
+                        alt="Avatar Preview"
+                        className="w-24 h-24 rounded-full object-cover border border-[var(--border-color)] bg-[var(--bg-secondary)]"
+                      />
+                      <div className="space-y-3 flex-1">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            if (e.target.files?.[0]) {
+                              handleFileUpload(e.target.files[0], async (url) => {
+                                setAvatarUrl(url);
+                                await fetch("/api/settings", {
+                                  method: "POST",
+                                  headers: { "Content-Type": "application/json" },
+                                  body: JSON.stringify({ key: "avatarUrl", value: url }),
+                                });
+                              }, "avatar");
+                            }
+                          }}
+                          className="w-full text-xs text-[var(--text-muted)]"
+                        />
+                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                          Upload a professional picture for your hero section. The image will be compressed and optimized dynamically to save storage and bandwidth.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

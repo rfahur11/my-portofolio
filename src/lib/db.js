@@ -200,3 +200,22 @@ export const deleteItem = async (table, id) => {
   saveLocalData(local);
   return true;
 };
+
+export const getSetting = async (key) => {
+  const settings = await getItems("settings");
+  const found = settings.find((s) => s.key === key);
+  return found ? found.value : null;
+};
+
+export const updateSetting = async (key, value) => {
+  const settings = await getItems("settings");
+  const found = settings.find((s) => s.key === key);
+  if (found) {
+    return await updateItem("settings", found.id, { key, value });
+  } else {
+    // Generate simple numeric id for mock if needed, Supabase handles serial ids
+    const tempId = isSupabaseConfigured ? undefined : Date.now();
+    return await insertItem("settings", { id: tempId, key, value });
+  }
+};
+
