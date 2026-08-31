@@ -114,6 +114,23 @@
         "Lucide Icons"
       ],
       "category": "Web"
+    },
+    {
+      "id": 9,
+      "title": "WebOz CRM & Lead Automation",
+      "description": "An automated CRM and lead generation system for WebOz. It orchestrates workflow automation using n8n and PostgreSQL, integrates Puppeteer for automated Google Maps business scraping to identify prospective leads without websites, and utilizes a Telegram bot notification system to deliver real-time new lead alerts.",
+      "description_id": "Sistem otomasi CRM dan pencarian prospek (leads) terintegrasi untuk WebOz. Menggunakan n8n untuk orkestrasi workflow, PostgreSQL untuk penyimpanan data, Puppeteer untuk scraping otomatis Google Maps guna mencari bisnis lokal yang belum memiliki website, serta bot Telegram untuk notifikasi prospek baru secara real-time.",
+      "imageUrl": "/n8n-crm-preview.png",
+      "link": "https://weboz.my.id/",
+      "techStack": [
+        "n8n",
+        "PostgreSQL",
+        "Next.js",
+        "Puppeteer",
+        "Docker",
+        "Telegram API"
+      ],
+      "category": "Web"
     }
   ],
   "experiences": [
