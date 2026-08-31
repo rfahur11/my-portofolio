@@ -321,6 +321,18 @@
       "name": "Figma",
       "level": 78,
       "category": "Tools"
+    },
+    {
+      "id": 20,
+      "name": "n8n (Workflow Automation)",
+      "level": 88,
+      "category": "Tools"
+    },
+    {
+      "id": 21,
+      "name": "Puppeteer (Web Automation)",
+      "level": 82,
+      "category": "Tools"
     }
   ],
   "contacts": [],

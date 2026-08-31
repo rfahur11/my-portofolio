@@ -75,9 +75,9 @@ const AboutSection = () => {
 
             <p className="text-base leading-relaxed text-[var(--text-muted)]">
               {language === "id" ? (
-                "Saya aktif bekerja dengan teknologi seperti Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, dan MongoDB. Saya sangat menantikan untuk berkontribusi pada proyek di mana teknologi bertindak sebagai jembatan menuju otomatisasi dan efisiensi operasional."
+                "Saya aktif bekerja dengan teknologi seperti n8n, Puppeteer, Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, PostgreSQL, dan MongoDB. Saya sangat menantikan untuk berkontribusi pada proyek di mana teknologi bertindak sebagai jembatan menuju otomatisasi dan efisiensi operasional."
               ) : (
-                "I actively work with technologies like Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, and MongoDB. I look forward to contributing to projects where technology acts as a bridge to automation and operational efficiency."
+                "I actively work with technologies like n8n, Puppeteer, Go (Fiber), Next.js, TypeScript, Python (TensorFlow/Keras), Java, PostgreSQL, and MongoDB. I look forward to contributing to projects where technology acts as a bridge to automation and operational efficiency."
               )}
             </p>
 

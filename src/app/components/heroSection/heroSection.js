@@ -131,6 +131,8 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
                 sequence={[
                   "Fullstack Developer",
                   2000,
+                  "Workflow Automation (n8n)",
+                  2000,
                   "AI Native Engineer",
                   2000,
                   "MLOps Engineer",
