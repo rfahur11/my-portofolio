@@ -7,3 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Project Context & Living State Guidelines
+Always consult [SYSTEM_STATE.md](file:///c:/machine/bharata-ml/porto/my-portofolio/SYSTEM_STATE.md) for the active technical ground truth, database schema, active API routes, and known architectural decisions before making major changes.
+When finishing new features, run the `project-state-sync` skill to keep `SYSTEM_STATE.md` up-to-date for future sessions.
