@@ -18,6 +18,13 @@ import {
   CheckCircle,
   Eye,
   Settings,
+  Cpu,
+  Clock,
+  Play,
+  Sparkles,
+  RefreshCw,
+  CheckCircle2,
+  Sliders,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -111,6 +118,22 @@ export default function AdminDashboard() {
 
   const [editingId, setEditingId] = useState(null);
 
+  // Automation & Cron state
+  const [automationConfig, setAutomationConfig] = useState({
+    preset: "0 1 * * *",
+    cronExpression: "0 1 * * *",
+    query: "Coffee Shop Bandung",
+    limit: 10,
+    autoTelegram: true,
+    enabled: true,
+    lastRun: null,
+    lastStatus: "Ready",
+    lastLeadsCount: 0,
+    lastLog: "",
+  });
+  const [isTriggering, setIsTriggering] = useState(false);
+  const [triggerLog, setTriggerLog] = useState("");
+
   const handleFileUpload = async (file, onUploadSuccess, folder = "general") => {
     try {
       const maxWidth = folder === "avatar" ? 400 : 800;
@@ -160,6 +183,7 @@ export default function AdminDashboard() {
         fetch("/api/skills", { cache: "no-store" }),
         fetch("/api/contact", { cache: "no-store" }),
         fetch("/api/settings?key=avatarUrl", { cache: "no-store" }),
+        fetch("/api/automation", { cache: "no-store" }),
       ]);
 
       if (projRes.ok) setProjects(await projRes.json());
@@ -169,6 +193,10 @@ export default function AdminDashboard() {
       if (setRes.ok) {
         const val = await setRes.json();
         if (val && val.value) setAvatarUrl(val.value);
+      }
+      if (arguments[5] || autoRes.ok) {
+        const autoData = await autoRes.json();
+        if (autoData) setAutomationConfig(autoData);
       }
     } catch (err) {
       setError("Failed to load CMS data.");
@@ -437,6 +465,7 @@ export default function AdminDashboard() {
               { id: "experience", label: "Experience", icon: Briefcase },
               { id: "skills", label: "Skills", icon: GraduationCap },
               { id: "messages", label: "Messages", icon: Mail, count: messages.filter(m => !m.is_read).length },
+              { id: "automation", label: "Automation & Cron", icon: Cpu },
               { id: "settings", label: "Settings", icon: Settings },
             ].map((tab) => (
               <button
@@ -1050,6 +1079,314 @@ export default function AdminDashboard() {
                   )}
                 </div>
               )}
+              {/* --- AUTOMATION & CRON TAB --- */}
+              {activeTab === "automation" && (
+                <div>
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                    <div>
+                      <h1 className="text-2xl font-heading font-bold text-[var(--text-primary)]">
+                        Automation & Cron Scheduler
+                      </h1>
+                      <p className="text-xs text-[var(--text-muted)] mt-1">
+                        Configure automated web scraping schedules, target keywords, and trigger real-time lead generation pipelines.
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 ${
+                        automationConfig.enabled
+                          ? "bg-accent-emerald/10 text-accent-emerald border border-accent-emerald/20"
+                          : "bg-accent-rose/10 text-accent-rose border border-accent-rose/20"
+                      }`}>
+                        <span className={`w-2 h-2 rounded-full ${automationConfig.enabled ? "bg-accent-emerald animate-pulse" : "bg-accent-rose"}`} />
+                        {automationConfig.enabled ? "Scheduler Active" : "Scheduler Paused"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid lg:grid-cols-3 gap-8">
+                    {/* Configuration Form */}
+                    <div className="lg:col-span-2 space-y-6">
+                      <div className="glass-card p-6 space-y-5">
+                        <h3 className="text-base font-heading font-semibold text-[var(--text-primary)] border-b border-[var(--border-color)] pb-3 flex items-center gap-2">
+                          <Clock size={18} className="text-accent-blue" />
+                          Cron Schedule Configuration
+                        </h3>
+
+                        {/* Schedule Preset Selector */}
+                        <div>
+                          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5">
+                            Schedule Frequency (Preset)
+                          </label>
+                          <select
+                            value={automationConfig.preset}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setAutomationConfig({
+                                ...automationConfig,
+                                preset: val,
+                                cronExpression: val === "custom" ? automationConfig.cronExpression : val,
+                              });
+                            }}
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue font-medium"
+                          >
+                            <option value="0 1 * * *">Every Day at 08:00 WIB (01:00 UTC) — Recommended</option>
+                            <option value="0 1,10 * * *">Twice Daily (08:00 & 17:00 WIB)</option>
+                            <option value="0 2 * * 1-5">Weekdays Only (Mon-Fri 09:00 WIB)</option>
+                            <option value="0 */6 * * *">Every 6 Hours (00:00, 06:00, 12:00, 18:00 WIB)</option>
+                            <option value="0 */12 * * *">Every 12 Hours</option>
+                            <option value="0 1 * * 0">Weekly on Sundays (08:00 WIB)</option>
+                            <option value="custom">Custom Cron Expression...</option>
+                          </select>
+                        </div>
+
+                        {/* Custom Cron Expression Input */}
+                        {automationConfig.preset === "custom" && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className="space-y-1.5"
+                          >
+                            <label className="block text-xs font-semibold text-[var(--text-secondary)]">
+                              Custom Cron Expression (UTC Standard)
+                            </label>
+                            <input
+                              type="text"
+                              value={automationConfig.cronExpression}
+                              onChange={(e) =>
+                                setAutomationConfig({ ...automationConfig, cronExpression: e.target.value })
+                              }
+                              placeholder="* * * * *"
+                              className="w-full px-3.5 py-2 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] font-mono focus:outline-none focus:border-accent-blue"
+                            />
+                            <span className="text-[10px] text-[var(--text-muted)]">
+                              Format: <code>[min] [hour] [day] [month] [day-of-week]</code> (e.g. <code>0 1 * * 1-5</code>)
+                            </span>
+                          </motion.div>
+                        )}
+
+                        {/* Target Scraping Parameters */}
+                        <div className="pt-2 border-t border-[var(--border-color)]">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-3">
+                            Target Lead Parameters
+                          </h4>
+                          <div className="grid sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">
+                                Search Query / Niche & City
+                              </label>
+                              <input
+                                type="text"
+                                value={automationConfig.query}
+                                onChange={(e) =>
+                                  setAutomationConfig({ ...automationConfig, query: e.target.value })
+                                }
+                                placeholder="Coffee Shop Bandung"
+                                className="w-full px-3.5 py-2 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">
+                                Max Leads per Run (Limit)
+                              </label>
+                              <input
+                                type="number"
+                                min="1"
+                                max="50"
+                                value={automationConfig.limit}
+                                onChange={(e) =>
+                                  setAutomationConfig({ ...automationConfig, limit: parseInt(e.target.value) || 10 })
+                                }
+                                className="w-full px-3.5 py-2 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-accent-blue"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Automation Toggles */}
+                        <div className="pt-2 border-t border-[var(--border-color)] space-y-3">
+                          <label className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-secondary)] cursor-pointer hover:bg-[var(--border-color)]/30 transition-colors">
+                            <div className="space-y-0.5">
+                              <span className="text-xs font-semibold text-[var(--text-primary)] block">
+                                Enable Automated Schedule
+                              </span>
+                              <span className="text-[11px] text-[var(--text-muted)]">
+                                Automatically run scraper at configured cron schedule intervals.
+                              </span>
+                            </div>
+                            <input
+                              type="checkbox"
+                              checked={automationConfig.enabled}
+                              onChange={(e) =>
+                                setAutomationConfig({ ...automationConfig, enabled: e.target.checked })
+                              }
+                              className="w-4 h-4 rounded text-accent-blue focus:ring-0 cursor-pointer"
+                            />
+                          </label>
+
+                          <label className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-secondary)] cursor-pointer hover:bg-[var(--border-color)]/30 transition-colors">
+                            <div className="space-y-0.5">
+                              <span className="text-xs font-semibold text-[var(--text-primary)] block">
+                                Real-Time Telegram Notifications
+                              </span>
+                              <span className="text-[11px] text-[var(--text-muted)]">
+                                Send instant lead alerts with direct WhatsApp links to your Telegram bot.
+                              </span>
+                            </div>
+                            <input
+                              type="checkbox"
+                              checked={automationConfig.autoTelegram}
+                              onChange={(e) =>
+                                setAutomationConfig({ ...automationConfig, autoTelegram: e.target.checked })
+                              }
+                              className="w-4 h-4 rounded text-accent-blue focus:ring-0 cursor-pointer"
+                            />
+                          </label>
+                        </div>
+
+                        {/* Save Button */}
+                        <div className="pt-2 flex justify-end">
+                          <button
+                            onClick={async () => {
+                              try {
+                                const res = await fetch("/api/automation", {
+                                  method: "POST",
+                                  headers: { "Content-Type": "application/json" },
+                                  body: JSON.stringify(automationConfig),
+                                });
+                                if (!res.ok) throw new Error("Failed to save settings");
+                                showToast("Automation & Cron settings saved successfully!");
+                              } catch (err) {
+                                showToast(err.message, "error");
+                              }
+                            }}
+                            className="px-6 py-2.5 rounded-xl bg-accent-blue text-white text-xs font-semibold hover:bg-accent-blue/90 transition-all flex items-center gap-2 shadow-lg shadow-accent-blue/20"
+                          >
+                            <Save size={15} />
+                            Save Configuration
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Quick Trigger & Status Card */}
+                    <div className="lg:col-span-1 space-y-6">
+                      {/* On-Demand Trigger */}
+                      <div className="glass-card p-6 space-y-4">
+                        <div className="flex items-center gap-2 text-accent-amber">
+                          <Sparkles size={18} />
+                          <h3 className="text-sm font-heading font-semibold text-[var(--text-primary)]">
+                            Run On-Demand
+                          </h3>
+                        </div>
+                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                          Trigger the scraper instantly using current settings without waiting for the scheduled cron time.
+                        </p>
+
+                        <button
+                          disabled={isTriggering}
+                          onClick={async () => {
+                            setIsTriggering(true);
+                            setTriggerLog("Initializing scraper pipeline...");
+                            try {
+                              const res = await fetch("/api/automation/trigger", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                  query: automationConfig.query,
+                                  limit: automationConfig.limit,
+                                  autoTelegram: automationConfig.autoTelegram,
+                                }),
+                              });
+                              const data = await res.json();
+                              if (!res.ok) throw new Error(data.error || "Trigger failed");
+
+                              setTriggerLog(data.log || `Execution success! Found ${data.leadsCaptured} leads.`);
+                              setAutomationConfig((prev) => ({
+                                ...prev,
+                                lastRun: data.timestamp,
+                                lastStatus: "Success",
+                                lastLeadsCount: data.leadsCaptured,
+                                lastLog: data.log,
+                              }));
+                              showToast(`Scraping triggered successfully! Found ${data.leadsCaptured} leads.`);
+                            } catch (err) {
+                              setTriggerLog(`Execution failed: ${err.message}`);
+                              showToast(err.message, "error");
+                            } finally {
+                              setIsTriggering(false);
+                            }
+                          }}
+                          className={`w-full py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-lg
+                            ${
+                              isTriggering
+                                ? "bg-accent-blue/50 text-white cursor-not-allowed"
+                                : "bg-gradient-to-r from-accent-blue to-accent-violet text-white hover:scale-[1.02] shadow-accent-blue/20"
+                            }`}
+                        >
+                          {isTriggering ? (
+                            <>
+                              <Loader2 size={16} className="animate-spin" />
+                              Running Pipeline...
+                            </>
+                          ) : (
+                            <>
+                              <Play size={16} />
+                              Run Scraping Now
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Execution Status Card */}
+                      <div className="glass-card p-6 space-y-4">
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] border-b border-[var(--border-color)] pb-2 flex items-center justify-between">
+                          <span>Latest Run Status</span>
+                          <CheckCircle2 size={15} className="text-accent-emerald" />
+                        </h4>
+
+                        <div className="space-y-2.5 text-xs">
+                          <div className="flex justify-between items-center">
+                            <span className="text-[var(--text-muted)]">Status:</span>
+                            <span className="font-semibold text-accent-emerald px-2 py-0.5 rounded-full bg-accent-emerald/10 text-[11px]">
+                              {automationConfig.lastStatus || "Ready"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-[var(--text-muted)]">Last Executed:</span>
+                            <span className="font-medium text-[var(--text-primary)] text-[11px]">
+                              {automationConfig.lastRun
+                                ? new Date(automationConfig.lastRun).toLocaleString("id-ID", {
+                                    dateStyle: "short",
+                                    timeStyle: "short",
+                                  }) + " WIB"
+                                : "Never executed"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-[var(--text-muted)]">Leads Captured:</span>
+                            <span className="font-bold text-accent-blue text-[11px]">
+                              {automationConfig.lastLeadsCount || 0} leads
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Live Log Console */}
+                        {(triggerLog || automationConfig.lastLog) && (
+                          <div className="mt-4 pt-3 border-t border-[var(--border-color)]">
+                            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block mb-1.5">
+                              Live Log Output:
+                            </span>
+                            <div className="p-3 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] font-mono text-[11px] text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">
+                              {triggerLog || automationConfig.lastLog}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* --- SETTINGS TAB --- */}
               {activeTab === "settings" && (
                 <div>
@@ -1099,3 +1436,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+
