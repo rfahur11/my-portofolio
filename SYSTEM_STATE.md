@@ -1,6 +1,6 @@
 # 🧭 System State & Living Context (Fahrur Rozi Portfolio)
 
-> **Terakhir Diperbarui**: 2026-09-01 18:56 WIB  
+> **Terakhir Diperbarui**: 2026-09-01 20:01 WIB  
 > **Status Build**: ✅ Passing (Next.js 16.3.2 Turbopack)  
 > **Live Production**: [https://fr-portofolio.netlify.app/](https://fr-portofolio.netlify.app/)  
 > **Repository**: `github.com/rfahur11/my-portofolio` (branch `main`)
@@ -33,7 +33,8 @@
 4. **`contacts`**:
    - Skema: `id` (PK), `name`, `email`, `subject`, `message`, `read` (boolean), `createdAt` (timestamp).
 5. **`settings`**:
-   - Skema: `id` (PK), `key` (text, unique), `value` (text). Aktif untuk `avatarUrl`.
+   - Skema: `id` (PK), `key` (text, unique), `value` (text).
+   - *Active Keys*: `avatarUrl`, `automation_config`.
 
 ---
 
@@ -42,6 +43,8 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 
 | Method | Route | Fungsi & Keterangan | Dynamic Status | Next.js 16 Async Params |
 | :--- | :--- | :--- | :--- | :--- |
+| `GET/POST` | `/api/automation` | Mengambil & menyimpan konfigurasi Cron & Scraper | `force-dynamic` | N/A |
+| `POST` | `/api/automation/trigger` | Memicu eksekusi scraper On-Demand secara instan | `force-dynamic` | N/A |
 | `GET/POST` | `/api/projects` | Mengambil & menambah project | `force-dynamic` | N/A |
 | `GET/PUT/DEL` | `/api/projects/[id]` | Detail, update, & hapus project | `force-dynamic` | `await params` ✅ |
 | `GET/POST` | `/api/experiences` | Mengambil & menambah experience | `force-dynamic` | N/A |
@@ -50,7 +53,7 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 | `GET/PUT/DEL` | `/api/skills/[id]` | Detail, update, & hapus skill | `force-dynamic` | `await params` ✅ |
 | `GET/POST` | `/api/contact` | Mengambil pesan admin & submit formulir | `force-dynamic` | N/A |
 | `GET/PUT/DEL` | `/api/contact/[id]` | Mark as read (`read: true`) & hapus pesan | `force-dynamic` | `await params` ✅ |
-| `GET/POST` | `/api/settings` | Mengambil & mengupdate setting (avatarUrl) | `force-dynamic` | N/A |
+| `GET/POST` | `/api/settings` | Mengambil & mengupdate setting (avatarUrl, dll.) | `force-dynamic` | N/A |
 | `POST` | `/api/upload` | Upload & kompresi gambar (Sharp, max 1MB) | `force-dynamic` | N/A |
 | `POST` | `/api/auth/login` | Login admin session cookie (`rfahrur6045@gmail.com`) | `force-dynamic` | N/A |
 | `GET` | `/api/auth/status` | Verifikasi status login admin | `force-dynamic` | N/A |
@@ -59,6 +62,13 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 ---
 
 ## 4. ✅ Fitur & Perbaikan yang Sudah Selesai (Completed)
+- [x] **Automation & Cron Scheduler UI di Admin CMS**:
+  - Menu baru *"Automation & Cron"* di sidebar `/admin`.
+  - Dropdown Preset (Harian 08:00 WIB, 2x Sehari, Hari Kerja Saja, 6 Jam Sekali).
+  - Editor Custom Cron Expression (`* * * * *`).
+  - Target Search Parameters (Query keyword & Max leads limit).
+  - Toggles: Enable Schedule & Real-Time Telegram Alerts.
+  - Tombol **"Run Scraping Now"** (On-Demand Execution) lengkap dengan live log output & last run status card.
 - [x] **Hero Section Dynamic SSR**: `src/app/page.js` mengambil `avatarUrl` di sisi server untuk menghindari delay / flickering gambar default.
 - [x] **Dukungan Bilingual (EN / ID)**: Language Context global (`LanguageContext.js`) mendukung translasi instan di Hero, About, Projects, Experience, Footer, dan tombol Download CV (`cv-en.pdf` & `cv-id.pdf`).
 - [x] **Kontak & Media Sosial Lengkap**: Integrasi link resmi GitHub, LinkedIn (`/in/fahrur-rozi-k-336b04164/`), WhatsApp (`0895380146029`), X (`@FahrurR41870299`), dan Medium (`@rfahrur6045`).
@@ -78,13 +88,7 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 
 ---
 
-## 5. ⏳ Rencana & Opsi Lanjutan (Next Steps / Backlog)
-- [ ] **GitHub Actions Scraper Automation**: Opsi deployment serverless cron workflow (`.github/workflows/auto_scraper.yml`) untuk scraping otomatis Google Maps setiap pagi tanpa perlu menjalankan terminal/Docker lokal.
-- [ ] **Interactive Scraper Trigger Button**: Tombol on-demand di Web Admin CRM (`/admin/crm`) untuk memicu pencarian leads berdasarkan kategori dan kota via browser.
-
----
-
-## 6. ⚠️ Technical Gotchas & Critical Rules (Wajib Dibaca Agent)
+## 5. ⚠️ Technical Gotchas & Critical Rules (Wajib Dibaca Agent)
 1. **Next.js 16 Promise Params**: Objek `params` pada dynamic route handler bersifat async. Selalu panggil `const { id } = await params;` sebelum mengakses properti.
 2. **PostgreSQL Auto-Increment Sequence**: Setelah operasi seeding manual atau custom import, sinkronkan sequence ID tabel dengan query:
    ```sql
