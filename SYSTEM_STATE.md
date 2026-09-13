@@ -1,6 +1,6 @@
 # 🧭 System State & Living Context (Fahrur Rozi Portfolio)
 
-> **Terakhir Diperbarui**: 2026-09-13 10:15 WIB  
+> **Terakhir Diperbarui**: 2026-09-13 11:25 WIB  
 > **Status Build**: ✅ Passing (Next.js 16.3.2 Turbopack, React 19)  
 > **Live Production**: [https://fr-portofolio.netlify.app/](https://fr-portofolio.netlify.app/)  
 > **Repository**: [rfahur11/my-portofolio](https://github.com/rfahur11/my-portofolio) (branch `main`)  
@@ -22,7 +22,6 @@
   - Next Themes v0.4 (Dark / Light mode switcher terintegrasi).
   - Dynamic Typing Animation (`react-type-animation` v3.2).
 - **Deployment Platform**: Netlify (Automated CI/CD deployment pada push ke branch `main`).
-- **Otomasi & Tooling**: n8n Workflow Automation, Puppeteer Headless Web Scraper, Telegram Bot API, Sharp Image Processing (`sharp` v0.35), PDF parser (`pdf-parse` v2.4).
 
 ---
 
@@ -42,7 +41,7 @@
    - Skema: `id` (PK), `name`, `email`, `subject`, `message`, `read` (boolean), `createdAt` (timestamp).
 5. **`settings`**:
    - Skema: `id` (PK), `key` (text, unique), `value` (text).
-   - *Active Keys*: `avatarUrl`, `automation_config`.
+   - *Active Keys*: `avatarUrl`.
 
 ---
 
@@ -52,8 +51,6 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 
 | Method | Route | Fungsi & Keterangan | Dynamic Status | Next.js 16 Async Params |
 | :--- | :--- | :--- | :--- | :--- |
-| `GET/POST` | `/api/automation` | Mengambil & menyimpan konfigurasi Cron & Scraper | `force-dynamic` | N/A |
-| `POST` | `/api/automation/trigger` | Memicu eksekusi scraper On-Demand secara instan | `force-dynamic` | N/A |
 | `GET/POST` | `/api/projects` | Mengambil & menambah project | `force-dynamic` | N/A |
 | `GET/PUT/DEL` | `/api/projects/[id]` | Detail, update, & hapus project | `force-dynamic` | `await params` ✅ |
 | `GET/POST` | `/api/experiences` | Mengambil & menambah experience | `force-dynamic` | N/A |
@@ -72,13 +69,7 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 
 ## 4. ✅ Fitur & Perbaikan yang Sudah Selesai (Completed)
 
-- [x] **Automation & Cron Scheduler UI di Admin CMS**:
-  - Menu baru *"Automation & Cron"* di sidebar `/admin`.
-  - Dropdown Preset (Harian 08:00 WIB, 2x Sehari, Hari Kerja Saja, 6 Jam Sekali).
-  - Editor Custom Cron Expression (`* * * * *`).
-  - Target Search Parameters (Query keyword & Max leads limit).
-  - Toggles: Enable Schedule & Real-Time Telegram Alerts.
-  - Tombol **"Run Scraping Now"** (On-Demand Execution) lengkap dengan live log output & last run status card.
+- [x] **Pembersihan CMS Admin**: Menghapus mock tab *Automation & Cron* dan endpoint `/api/automation/*` demi menjaga bounded context portofolio yang bersih dan memperbaiki bug runtime `autoRes` (Failed to load CMS data).
 - [x] **Hero Section Dynamic SSR**: `src/app/page.js` mengambil `avatarUrl` di sisi server untuk menghindari delay / flickering gambar default.
 - [x] **Dukungan Bilingual (EN / ID)**: Language Context global (`LanguageContext.js`) mendukung translasi instan di Hero, About, Projects, Experience, Footer, dan tombol Download CV (`cv-en.pdf` & `cv-id.pdf`).
 - [x] **Kontak & Media Sosial Lengkap**: Integrasi link resmi GitHub, LinkedIn (`/in/fahrur-rozi-k-336b04164/`), WhatsApp (`0895380146029`), X (`@FahrurR41870299`), dan Medium (`@rfahrur6045`).
