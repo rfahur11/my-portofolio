@@ -1,24 +1,32 @@
 # 🧭 System State & Living Context (Fahrur Rozi Portfolio)
 
-> **Terakhir Diperbarui**: 2026-09-01 20:01 WIB  
-> **Status Build**: ✅ Passing (Next.js 16.3.2 Turbopack)  
+> **Terakhir Diperbarui**: 2026-09-13 10:15 WIB  
+> **Status Build**: ✅ Passing (Next.js 16.3.2 Turbopack, React 19)  
 > **Live Production**: [https://fr-portofolio.netlify.app/](https://fr-portofolio.netlify.app/)  
-> **Repository**: `github.com/rfahur11/my-portofolio` (branch `main`)
+> **Repository**: [rfahur11/my-portofolio](https://github.com/rfahur11/my-portofolio) (branch `main`)  
+> **Target Deployment**: Netlify / Vercel Serverless  
 
 ---
 
 ## 1. 🏗️ Ringkasan Arsitektur & Tech Stack
-- **Framework & Runtime**: Next.js 16.3.2 (App Router, Turbopack), React 19, Node.js 20.
+
+- **Framework & Runtime**: Next.js 16.3.2 (App Router, Turbopack), React 19.2.8, Node.js 20.
 - **Database & Storage**:
   - **Primary**: Supabase PostgreSQL (AWS `ap-southeast-1` pooler port 6543, SSL mode require).
   - **Local/Fallback**: `src/lib/mockDb.json`.
-- **Design System & Styling**: Vanilla Tailwind CSS v4, Glassmorphism card system, Framer Motion animations, React Type Animation, Lucide Icons, Custom SVG icons (`XIcon`, `MediumIcon`, `WhatsappIcon`).
+  - **Client**: `@supabase/supabase-js` v2.112.3 & `@supabase/ssr` v0.12.4.
+- **Design System & Styling**:
+  - Tailwind CSS v3.4 (Custom color palettes, glassmorphic card system).
+  - Framer Motion v13.1 (Smooth page transitions, scroll animations, interactive cards).
+  - Lucide React Icons v1.33 & Custom SVG icons (`XIcon`, `MediumIcon`, `WhatsappIcon`).
+  - Next Themes v0.4 (Dark / Light mode switcher terintegrasi).
+  - Dynamic Typing Animation (`react-type-animation` v3.2).
 - **Deployment Platform**: Netlify (Automated CI/CD deployment pada push ke branch `main`).
-- **Otomasi & Tooling**: n8n Workflow Automation, Puppeteer Headless Web Scraper, Telegram Bot API, Sharp Image Processing.
+- **Otomasi & Tooling**: n8n Workflow Automation, Puppeteer Headless Web Scraper, Telegram Bot API, Sharp Image Processing (`sharp` v0.35), PDF parser (`pdf-parse` v2.4).
 
 ---
 
-## 2. 🗄️ Database & Schema Snapshot
+## 2. 🗄️ Database & Schema Snapshot (Supabase PostgreSQL)
 
 ### Tabel PostgreSQL Supabase:
 1. **`projects`**:
@@ -39,6 +47,7 @@
 ---
 
 ## 3. 🌐 API Endpoints & Routes Matrix
+
 Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic";` untuk mencegah stale caching.
 
 | Method | Route | Fungsi & Keterangan | Dynamic Status | Next.js 16 Async Params |
@@ -62,6 +71,7 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 ---
 
 ## 4. ✅ Fitur & Perbaikan yang Sudah Selesai (Completed)
+
 - [x] **Automation & Cron Scheduler UI di Admin CMS**:
   - Menu baru *"Automation & Cron"* di sidebar `/admin`.
   - Dropdown Preset (Harian 08:00 WIB, 2x Sehari, Hari Kerja Saja, 6 Jam Sekali).
@@ -82,13 +92,23 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
   - Terdaftar di Skills section (Tools & Design).
   - Ditambahkan ke TypeAnimation di Hero Section ("Workflow Automation (n8n)").
   - Disebutkan dalam deskripsi About Me.
-- [x] **Custom Agent Skills**:
-  - `auto-pr-deploy`: Alur kerja otomatis pembuatan PR, merge, dan deploy ke production.
-  - `project-state-sync`: Alur kerja sinkronisasi living context sistem agar agent tidak kehilangan konteks antar sesi.
 
 ---
 
-## 5. ⚠️ Technical Gotchas & Critical Rules (Wajib Dibaca Agent)
+## 5. ⚙️ Environment Variables (`.env.local`)
+
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+*(Template tersedia di `.env.local.example`)*
+
+---
+
+## 6. ⚠️ Technical Gotchas & Critical Rules (Wajib Dibaca Agent)
+
 1. **Next.js 16 Promise Params**: Objek `params` pada dynamic route handler bersifat async. Selalu panggil `const { id } = await params;` sebelum mengakses properti.
 2. **PostgreSQL Auto-Increment Sequence**: Setelah operasi seeding manual atau custom import, sinkronkan sequence ID tabel dengan query:
    ```sql
