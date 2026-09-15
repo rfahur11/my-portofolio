@@ -77,55 +77,57 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-hero-gradient-light dark:bg-hero-gradient" />
+    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 sm:pb-24 md:py-0">
+      {/* Animated Background Wrapper with overflow-hidden */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-hero-gradient-light dark:bg-hero-gradient" />
 
-      {/* Gradient Orbs */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent-blue/20 dark:bg-accent-blue/10 rounded-full blur-3xl animate-float" />
-      <div
-        className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent-violet/20 dark:bg-accent-violet/10 rounded-full blur-3xl animate-float"
-        style={{ animationDelay: "3s" }}
-      />
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-cyan/10 dark:bg-accent-cyan/5 rounded-full blur-3xl animate-float"
-        style={{ animationDelay: "1.5s" }}
-      />
+        {/* Gradient Orbs */}
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent-blue/20 dark:bg-accent-blue/10 rounded-full blur-3xl animate-float" />
+        <div
+          className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent-violet/20 dark:bg-accent-violet/10 rounded-full blur-3xl animate-float"
+          style={{ animationDelay: "3s" }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-cyan/10 dark:bg-accent-cyan/5 rounded-full blur-3xl animate-float"
+          style={{ animationDelay: "1.5s" }}
+        />
 
-      {/* Grid Pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]"
-        style={{
-          backgroundImage: `linear-gradient(var(--text-primary) 1px, transparent 1px), linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
+        {/* Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]"
+          style={{
+            backgroundImage: `linear-gradient(var(--text-primary) 1px, transparent 1px), linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)`,
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
 
       {/* Content */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 container-custom px-4 sm:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-16 pt-20"
+        className="relative z-10 container-custom px-4 sm:px-6 flex flex-col md:flex-row items-center gap-8 sm:gap-10 md:gap-16 pt-2 pb-6 sm:pt-6 sm:pb-10 md:pt-20 md:pb-0"
       >
         {/* Text Content */}
         <div className="flex-1 text-center md:text-left">
           <motion.div variants={item}>
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-medium tracking-wider uppercase glass mb-6 text-accent-blue">
+            <span className="inline-block px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium tracking-wider uppercase glass mb-4 sm:mb-6 text-accent-blue">
               {language === "id" ? "Tersedia untuk peluang kerja" : "Available for opportunities"}
             </span>
           </motion.div>
 
           <motion.h1
             variants={item}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-tight mb-6"
+            className="text-2xl min-[380px]:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-tight mb-3 sm:mb-6"
           >
             <span className="text-[var(--text-primary)]">{language === "id" ? "Halo, Saya " : "Hi, I'm "}</span>
             <span className="text-gradient">Fahrur Rozi</span>
           </motion.h1>
 
-          <motion.div variants={item} className="mb-6">
-            <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium text-[var(--text-secondary)]">
+          <motion.div variants={item} className="mb-4 sm:mb-6">
+            <div className="text-base min-[380px]:text-lg sm:text-2xl lg:text-3xl font-heading font-medium text-[var(--text-secondary)] min-h-[1.75rem] sm:min-h-[2.25rem]">
               <span>{language === "id" ? "Saya seorang " : "I'm a "}</span>
               <TypeAnimation
                 sequence={[
@@ -150,7 +152,7 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
 
           <motion.p
             variants={item}
-            className="text-base sm:text-lg text-[var(--text-muted)] max-w-xl mx-auto md:mx-0 mb-8 leading-relaxed"
+            className="text-sm sm:text-base md:text-lg text-[var(--text-muted)] max-w-xl mx-auto md:mx-0 mb-6 sm:mb-8 leading-relaxed"
           >
             {language === "id"
               ? "Fullstack & Integration Engineer dengan ~2.5 tahun pengalaman merancang sistem berbasis AI, pipeline ERP tangguh, layanan backend throughput tinggi (Go/Fiber), dan aplikasi lintas platform. Saat ini membangun solusi otomatisasi & ML di PT Bharata International Pharmaceutical."
@@ -160,11 +162,11 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
           {/* CTA Buttons */}
           <motion.div
             variants={item}
-            className="flex flex-wrap gap-4 justify-center md:justify-start mb-10"
+            className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start mb-6 sm:mb-10"
           >
             <a
               href="#contact"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-blue to-accent-violet text-white font-medium text-sm shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-all duration-300 hover:scale-105"
+              className="group relative inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r from-accent-blue to-accent-violet text-white font-medium text-sm shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-all duration-300 hover:scale-105"
             >
               <Mail size={18} />
               {language === "id" ? "Hubungi Saya" : "Contact Me"}
@@ -173,7 +175,7 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
               href={language === "id" ? "/cv-id.pdf" : "/cv-en.pdf"}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl glass font-medium text-sm text-[var(--text-primary)] hover:shadow-glow transition-all duration-300 hover:scale-105"
+              className="group inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl glass font-medium text-sm text-[var(--text-primary)] hover:shadow-glow transition-all duration-300 hover:scale-105"
             >
               <Download size={18} />
               {language === "id" ? "Unduh CV" : "Download CV"}
@@ -201,37 +203,42 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
         </div>
 
         {/* Profile Image */}
-        <motion.div variants={item} className="flex-shrink-0">
-          <div className="relative">
+        <motion.div variants={item} className="flex-shrink-0 order-first md:order-last mb-4 md:mb-0">
+          <div className="relative p-2 sm:p-3">
             {/* Gradient Ring */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-accent-blue via-accent-violet to-accent-cyan rounded-full animate-spin-slow opacity-75 blur-sm" />
-            <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--bg-primary)]">
+            <div className="absolute inset-0.5 sm:inset-1 bg-gradient-to-r from-accent-blue via-accent-violet to-accent-cyan rounded-full animate-spin-slow opacity-75 blur-sm will-change-transform" />
+            <div className="relative w-40 h-40 min-[380px]:w-48 min-[380px]:h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[var(--bg-primary)] shadow-2xl transition-all duration-300">
               <img
                 src={avatarUrl}
                 alt="Fahrur Rozi"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-[center_20%]"
+                loading="eager"
               />
             </div>
 
             {/* Floating Badges */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
+              animate={{ y: [0, -5, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 -right-4 px-3 py-1.5 rounded-lg glass-card text-xs font-medium text-accent-blue"
+              className="absolute top-1 -right-1 sm:top-2 sm:-right-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl glass-card text-[10px] min-[380px]:text-[11px] sm:text-xs font-medium text-accent-blue whitespace-nowrap shadow-lg z-10 flex items-center gap-1.5 backdrop-blur-md border border-white/20 dark:border-white/10"
             >
-              🚀 Open to Work
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue"></span>
+              </span>
+              <span>🚀 Open to Work</span>
             </motion.div>
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 5, 0] }}
               transition={{
                 duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: 1.5,
               }}
-              className="absolute -bottom-4 -left-4 px-3 py-1.5 rounded-lg glass-card text-xs font-medium text-accent-emerald"
+              className="absolute bottom-1 -left-1 sm:bottom-2 sm:-left-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl glass-card text-[10px] min-[380px]:text-[11px] sm:text-xs font-medium text-accent-emerald whitespace-nowrap shadow-lg z-10 flex items-center gap-1.5 backdrop-blur-md border border-white/20 dark:border-white/10"
             >
-              💻 2.5yr Experience
+              <span>💻 2.5yr Experience</span>
             </motion.div>
           </div>
         </motion.div>
@@ -242,7 +249,7 @@ const HeroSection = ({ initialAvatarUrl = "/images/avatar.jpg" }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <a
           href="#about"

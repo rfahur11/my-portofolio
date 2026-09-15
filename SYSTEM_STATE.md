@@ -83,6 +83,12 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
   - Terdaftar di Skills section (Tools & Design).
   - Ditambahkan ke TypeAnimation di Hero Section ("Workflow Automation (n8n)").
   - Disebutkan dalam deskripsi About Me.
+- [x] **Hero Section Mobile Responsiveness & Profile Photo UI/UX Polish**:
+  - **Fluid Avatar Sizing**: Skala avatar responsif bertahap (`w-40 h-40` <380px, `min-[380px]:w-48`, `sm:w-60`, `md:w-72`, `lg:w-80`) mencegah avatar mendominasi layar kecil secara berlebih.
+  - **Focal Point Cropping**: Menambahkan `object-[center_20%]` sehingga wajah terpusat dengan proporsi headroom alami (mencegah dahi/rambut terpotong di tepi atas lingkaran).
+  - **Safe Floating Badges**: Penyesuaian koordinat (-top-1.5, -bottom-1.5) dengan backdrop-blur, live pulsing dot pada badge "Open to Work", dan skala tipografi adaptif.
+  - **Rhythm & Vertical Space Optimization**: Mengurangi padding vertikal berlebih pada mobile (`pt-20 pb-12`, container `gap-8 pt-2 pb-6`) sehingga judul, bio, dan tombol CTA terlihat proporsional di atas layar lipat (above the fold).
+  - **GPU Accelerated Glow Aura**: Penambahan `will-change-transform` pada animated gradient ring untuk performa 60-120fps di perangkat mobile.
 
 ---
 
