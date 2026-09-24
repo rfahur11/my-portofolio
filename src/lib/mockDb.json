@@ -131,6 +131,45 @@
         "Telegram API"
       ],
       "category": "Web"
+    },
+    {
+      "id": 10,
+      "title": "VisionOps Guard — Real-Time Industrial Safety PPE & CVOps Platform",
+      "description": "An enterprise-grade, end-to-end Computer Vision & MLOps system that automates industrial Personal Protective Equipment (PPE / K3) compliance monitoring in real time with sub-15ms ONNX latency, MLflow experiment tracking, Prometheus/Grafana observability, and automated GitHub Actions CI/CD deployment.",
+      "description_id": "Sistem Computer Vision & CVOps end-to-end tingkat enterprise untuk pengawasan otomatis kepatuhan Alat Pelindung Diri (APD / K3) industri secara real-time dengan latensi sub-15ms berbasis ONNX Runtime FP16, tracking eksperimen MLflow, observabilitas Prometheus/Grafana, dan CI/CD GitHub Actions.",
+      "imageUrl": "/visionops-preview.png",
+      "link": "https://rfahrur6045-mlops-final-copy.hf.space",
+      "techStack": [
+        "Ultralytics YOLO26",
+        "ONNX Runtime",
+        "FastAPI",
+        "MLflow",
+        "Prometheus",
+        "Grafana",
+        "Docker",
+        "Hugging Face",
+        "GitHub Actions"
+      ],
+      "category": "AI/ML"
+    },
+    {
+      "id": 11,
+      "title": "Marketplace Intelligence System — Hybrid RAG",
+      "description": "Enterprise-grade executive assistant & anti-hallucination Hybrid RAG for multi-channel e-commerce intelligence (Tokopedia, Shopee, TikTok Shop, Lazada). Combines DuckDB in-memory OLAP for mathematically exact Text-to-SQL financial analytics with ChromaDB for semantic customer review insights.",
+      "description_id": "Asisten eksekutif cerdas dan sistem Hybrid RAG anti-halusinasi untuk multi-channel e-commerce intelligence (Tokopedia, Shopee, TikTok Shop, Lazada). Menggabungkan DuckDB OLAP untuk Text-to-SQL finansial yang presisi secara matematis dengan ChromaDB untuk analisis semantik ulasan pelanggan.",
+      "imageUrl": "/rag-marketplace-preview.png",
+      "link": "https://huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence",
+      "techStack": [
+        "Python",
+        "Google Gemini",
+        "DuckDB",
+        "ChromaDB",
+        "Hybrid RAG",
+        "Text-to-SQL",
+        "Gradio",
+        "Pytest"
+      ],
+      "category": "AI/ML"
     }
   ],
   "experiences": [

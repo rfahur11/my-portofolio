@@ -5,7 +5,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, X } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 
-const categories = ["All", "Web", "Mobile", "Data", "Tools"];
+const categories = ["All", "AI/ML", "Web", "Mobile", "Data", "Tools"];
 
 const projects = [
   {

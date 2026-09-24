@@ -1,6 +1,6 @@
 # 🧭 System State & Living Context (Fahrur Rozi Portfolio)
 
-> **Terakhir Diperbarui**: 2026-09-13 11:25 WIB  
+> **Terakhir Diperbarui**: 2026-09-24 08:42 WIB  
 > **Status Build**: ✅ Passing (Next.js 16.3.2 Turbopack, React 19)  
 > **Live Production**: [https://fr-portofolio.netlify.app/](https://fr-portofolio.netlify.app/)  
 > **Repository**: [rfahur11/my-portofolio](https://github.com/rfahur11/my-portofolio) (branch `main`)  
@@ -30,7 +30,7 @@
 ### Tabel PostgreSQL Supabase:
 1. **`projects`**:
    - Skema: `id` (Serial PK), `title` (text), `description` (text, EN), `description_id` (text, ID), `imageUrl` (text), `link` (text), `techStack` (text[]), `category` (text).
-   - *Total Proyek*: 9 record aktif (termasuk *LarisAI*, *Enterprise ERP*, *Task Management*, *Caraka ML*, *FlyTicket*, *E-Commerce Analytics*, *Stock Management*, *WebOz Website UMKM*, dan *WebOz CRM & Lead Automation*).
+   - *Total Proyek*: 11 record aktif (termasuk *LarisAI*, *Enterprise ERP*, *Task Management*, *Caraka ML*, *FlyTicket*, *E-Commerce Analytics*, *Stock Management*, *WebOz Website UMKM*, *WebOz CRM & Lead Automation*, *VisionOps Guard*, dan *Marketplace Intelligence System (Hybrid RAG)*).
 2. **`experiences`**:
    - Skema: `id` (PK), `title`, `organization`, `location`, `icon`, `period`, `description`, `highlights` (text[]).
    - *Total Riwayat*: 5 record aktif (PT Bharata, Bangkit Academy, SMK N 2 Purwakarta, Binar Academy, Puskesmas Bantarsari).
@@ -69,6 +69,10 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 
 ## 4. ✅ Fitur & Perbaikan yang Sudah Selesai (Completed)
 
+- [x] **Showcase Proyek VisionOps Guard & Marketplace Intelligence (Hybrid RAG)**:
+  - Integrasi 2 proyek unggulan AI/ML ke database Supabase production (ID 10 & 11) dan local fallback `mockDb.json`.
+  - Preview image beresolusi tinggi `/visionops-preview.png` & `/rag-marketplace-preview.png` di folder `public/`.
+  - Penambahan filter kategori `AI/ML` pada UI Carousel proyek (`src/app/components/carousel/page.js`).
 - [x] **Pembersihan CMS Admin**: Menghapus mock tab *Automation & Cron* dan endpoint `/api/automation/*` demi menjaga bounded context portofolio yang bersih dan memperbaiki bug runtime `autoRes` (Failed to load CMS data).
 - [x] **Hero Section Dynamic SSR**: `src/app/page.js` mengambil `avatarUrl` di sisi server untuk menghindari delay / flickering gambar default.
 - [x] **Dukungan Bilingual (EN / ID)**: Language Context global (`LanguageContext.js`) mendukung translasi instan di Hero, About, Projects, Experience, Footer, dan tombol Download CV (`cv-en.pdf` & `cv-id.pdf`).
