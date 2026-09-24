@@ -106,7 +106,7 @@
       "description": "A professional website agency offering simple, high-converting websites for micro, small, and medium enterprises (MSMEs). Integrates WhatsApp ordering buttons, responsive designs, fast 1-3 days turnaround, and reliable support.",
       "description_id": "Agensi pembuatan website profesional untuk UMKM dengan integrasi tombol order WhatsApp, desain responsif, pengerjaan cepat 1-3 hari, dan dukungan teknis terpercaya.",
       "imageUrl": "/weboz-preview.png",
-      "link": "https://weboz.my.id/",
+      "link": "https://fr-portofolio.netlify.app/",
       "techStack": [
         "Next.js",
         "Tailwind CSS",

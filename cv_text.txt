@@ -1,6 +1,6 @@
 FAHRUR ROZI K — Fullstack, Backend & Applied AI Engineer
 Central Java, Indonesia (GMT+7) • Open to Remote / Relocation
-+62 895-3801-46029 • rfahrur6045@gmail.com • https://www.linkedin.com/in/fahrur-rozi-k-336b04164 • https://github.com/rfahur11 • https://weboz.my.id
++62 895-3801-46029 • rfahrur6045@gmail.com • https://www.linkedin.com/in/fahrur-rozi-k-336b04164 • https://github.com/rfahur11 • https://fr-portofolio.netlify.app/
 
 SUMMARY
 Fullstack, Backend & Applied AI Engineer with ~2.5 years of experience architecting anti-hallucination Hybrid RAG systems (DuckDB & ChromaDB), real-time MLOps/Computer Vision platforms (YOLO26 & ONNX FP16), high-throughput backend services (Go/Fiber), and enterprise ERP/POS systems (Next.js, Electron). Proven track record in resolving critical API rate-limit bottlenecks, engineering resilient asynchronous order-ingestion pipelines, and deploying edge ML models to production.
