@@ -1,71 +1,91 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/lib/LanguageContext";
 
-const experiences = [
-  {
-    id: 1,
-    title: "Bangkit Academy 2024 — Machine Learning Path",
-    organization: "Bangkit Academy, MSIB Batch 6",
-    location: "Bandung, West Java",
-    icon: "/bangkit.png",
-    period: "Feb 2024 — Jun 2024",
-    description:
-      "Intensive program on machine learning and data analytics, powered by Google, GoTo, and Traveloka.",
-    highlights: [
-      "Mastered ML concepts through Coursera and Dicoding platforms, including deep learning, computer vision, and NLP",
-      "Developed capstone project: Caraka — Javanese script learning app with TensorFlow Lite model for character recognition",
-      "Collaborated with Cloud Computing and Android teams across disciplines",
-    ],
+const fallbackTranslations = {
+  "PT Bharata International Pharmaceutical": {
+    title_id: "Full Stack Developer",
+    description_id: "Merancang dan mengimplementasikan sistem otomatisasi bertenaga AI untuk meningkatkan efisiensi operasional bisnis serta mendukung pengambilan keputusan berbasis data.",
+    highlights_id: [
+      "Mengatasi kegagalan pembatasan laju API Terbuka Shopee yang kritis, memulihkan stabilitas sinkronisasi pesanan 100% di bawah pembekuan kode vendor aktif",
+      "Merekayasa pipeline penyerapan pesanan asinkron idempoten untuk saluran multi-marketplace dengan mekanisme retry backoff dan dead-letter queue recovery",
+      "Melatih dan menerapkan model Computer Vision untuk analisis kulit otomatis dalam alur kerja produk R&D",
+      "Membangun modul keuangan enterprise dengan Java & React, mengotomatiskan pelacakan arus kas dan efisiensi administratif",
+      "Menetapkan standar kontrak API termasuk versioning request, taksonomi error, dan automated test gates"
+    ]
   },
-  {
-    id: 2,
-    title: "Teaching & Administrative Staff",
-    organization: "SMKN 2 Purwakarta",
-    location: "Purwakarta, West Java",
-    icon: "/logo_smekda.png",
-    period: "Aug 2023 — Dec 2023",
-    description:
-      "Internship as teaching and administrative staff at state vocational high school.",
-    highlights: [
-      "Instructed Computer and Network Engineering for 10th-grade students using the Merdeka Curriculum",
-      "Collaborated with administrative team to enhance school operational processes",
-      "Cultivated a positive learning environment and gained deep understanding of education dynamics",
-    ],
+  "Bangkit": {
+    title_id: "Machine Learning — Bangkit Academy",
+    description_id: "Program intensif machine learning dan analitik data dari Google, GoTo, dan Traveloka. Mendalami konsep machine learning, deep learning, dan computer vision.",
+    highlights_id: [
+      "Menguasai konsep ML melalui platform Coursera dan Dicoding, mencakup deep learning, computer vision, dan pemrosesan bahasa alami (NLP)",
+      "Mengembangkan proyek capstone: Caraka — aplikasi pembelajaran aksara Jawa dengan model TensorFlow Lite untuk pengenalan karakter",
+      "Berkolaborasi dengan tim Cloud Computing dan Android lintas disiplin dalam pengembangan aplikasi capstone"
+    ]
   },
-  {
-    id: 3,
-    title: "IT Staff",
-    organization: "Puskesmas Bantarsari",
-    location: "Cilacap, Central Java",
-    icon: "/logo-puskesmas.png",
-    period: "Jul 2022 — Oct 2022",
-    description:
-      "IT internship managing digital infrastructure at a public health center.",
-    highlights: [
-      "Managed and published the health center's website, achieving 20% increase in user engagement within 3 months",
-      "Built VBA-based Excel information system for stock management, increasing productivity by 30%",
-      "Developed automated letters management system to streamline administrative correspondence",
-    ],
+  "SMK": {
+    title_id: "Staf Pengajar & Asisten IT",
+    description_id: "Praktik kerja lapangan sebagai asisten guru IT di SMK Negeri 2 Purwakarta, mengajar materi Dasar Teknik Jaringan Komputer dan Telekomunikasi (TJKT) untuk siswa kelas 10.",
+    highlights_id: [
+      "Mengajar materi Dasar Teknik Jaringan Komputer dan Telekomunikasi (TJKT) untuk siswa kelas 10 menggunakan Kurikulum Merdeka",
+      "Berkolaborasi dengan tim administrasi untuk meningkatkan efisiensi proses operasional sekolah",
+      "Menciptakan lingkungan belajar yang positif dan interaktif serta mendalami dinamika manajemen pendidikan"
+    ]
   },
-  {
-    id: 4,
-    title: "Fullstack Web Developer Program",
-    organization: "Binar Academy, MSIB Batch 4",
-    location: "Tangerang, Banten",
-    icon: "/binar_academy_logo.jpeg",
-    period: "Feb 2023 — Jun 2023",
-    description:
-      "Intensive fullstack web development program with JavaScript (React.js & Next.js).",
-    highlights: [
-      "Mastered fullstack web development concepts through virtual learning platforms",
-      "Built capstone project: FlyTicket — a flight ticket booking website deployed on Netlify",
-      "Enhanced collaboration and soft skills through group project development",
-    ],
+  "Binar": {
+    title_id: "Program Fullstack Web Developer",
+    description_id: "Bootcamp intensif pengembangan web fullstack dengan ekosistem JavaScript modern (React.js & Next.js).",
+    highlights_id: [
+      "Menguasai konsep pengembangan web modern (frontend dan backend) melalui platform pembelajaran interaktif",
+      "Membangun proyek capstone: FlyTicket — website pemesanan tiket pesawat yang di-deploy di Netlify",
+      "Meningkatkan kemampuan kolaborasi tim, komunikasi teknis, dan manajemen proyek secara terstruktur"
+    ]
   },
-];
+  "Bantarsari": {
+    title_id: "Staf IT & Sistem Informasi",
+    description_id: "Magang IT dalam pengelolaan infrastruktur digital dan otomatisasi administrasi di Puskesmas Bantarsari.",
+    highlights_id: [
+      "Mengelola dan mempublikasikan konten website resmi puskesmas, meningkatkan kunjungan informasi sebesar 20% dalam 3 bulan",
+      "Membangun sistem informasi manajemen stok berbasis Excel VBA, meningkatkan produktivitas staf hingga 30%",
+      "Mengembangkan sistem otomasi persuratan digital berbasis makro VBA untuk mempercepat alur surat-menyurat puskesmas"
+    ]
+  }
+};
+
+const formatPeriod = (period, lang) => {
+  if (!period) return "";
+  if (lang !== "id") return period;
+  return period
+    .replace(/Present/gi, "Sekarang")
+    .replace(/Aug/gi, "Agu")
+    .replace(/Oct/gi, "Okt")
+    .replace(/Dec/gi, "Des");
+};
+
+const getExperienceField = (exp, field, lang) => {
+  if (lang !== "id") return exp[field];
+
+  const idField = `${field}_id`;
+  const val = exp[idField];
+
+  // If valid translation string/array exists in item (length > 1 guards against typo like "s")
+  if (Array.isArray(val) && val.length > 0) return val;
+  if (typeof val === "string" && val.trim().length > 1) return val;
+
+  // Check fallback dictionary
+  for (const [key, fallback] of Object.entries(fallbackTranslations)) {
+    if (
+      (exp.organization && exp.organization.toLowerCase().includes(key.toLowerCase())) ||
+      (exp.title && exp.title.toLowerCase().includes(key.toLowerCase()))
+    ) {
+      if (fallback[idField]) return fallback[idField];
+    }
+  }
+
+  return exp[field];
+};
 
 const ExperienceSection = () => {
   const { language } = useLanguage();
@@ -73,11 +93,15 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [experiences, setExperiences] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("/api/experiences")
       .then((res) => res.json())
-      .then((data) => setExperiences(data))
-      .catch((err) => console.error(err));
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setExperiences(data);
+        }
+      })
+      .catch((err) => console.error("Error fetching experiences:", err));
   }, []);
 
   return (
@@ -111,10 +135,14 @@ const ExperienceSection = () => {
 
           {experiences.map((exp, index) => {
             const isLeft = index % 2 === 0;
+            const title = getExperienceField(exp, "title", language);
+            const description = getExperienceField(exp, "description", language);
+            const highlights = getExperienceField(exp, "highlights", language) || [];
+            const period = formatPeriod(exp.period, language);
 
             return (
               <motion.div
-                key={exp.id}
+                key={exp.id || index}
                 initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
@@ -135,7 +163,7 @@ const ExperienceSection = () => {
                     {/* Period Badge */}
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-blue/10 dark:bg-accent-blue/10 mb-4">
                       <span className="text-xs font-medium text-accent-blue">
-                        {exp.period}
+                        {period}
                       </span>
                     </div>
 
@@ -143,14 +171,14 @@ const ExperienceSection = () => {
                     <div className="flex items-start gap-3 mb-3">
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-white dark:bg-dark-700 p-1">
                         <img
-                          src={exp.icon}
+                          src={exp.icon || "/placeholder-logo.png"}
                           alt={exp.organization}
                           className="w-full h-full object-contain"
                         />
                       </div>
                       <div>
                         <h3 className="text-base font-heading font-semibold text-[var(--text-primary)] leading-snug">
-                          {language === "id" && exp.title_id ? exp.title_id : exp.title}
+                          {title}
                         </h3>
                         <p className="text-sm text-accent-blue mt-0.5">
                           {exp.organization}
@@ -163,12 +191,12 @@ const ExperienceSection = () => {
 
                     {/* Description */}
                     <p className="text-sm text-[var(--text-muted)] mb-4">
-                      {language === "id" && exp.description_id ? exp.description_id : exp.description}
+                      {description}
                     </p>
 
                     {/* Highlights */}
                     <ul className="space-y-2">
-                      {(language === "id" && exp.highlights_id && exp.highlights_id.length > 0 ? exp.highlights_id : exp.highlights).map((highlight, i) => (
+                      {highlights.map((highlight, i) => (
                         <li
                           key={i}
                           className="flex items-start gap-2 text-sm text-[var(--text-secondary)]"

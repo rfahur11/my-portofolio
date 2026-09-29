@@ -69,6 +69,11 @@ Seluruh GET handler menggunakan deklarasi `export const dynamic = "force-dynamic
 
 ## 4. ✅ Fitur & Perbaikan yang Sudah Selesai (Completed)
 
+- [x] **Bilingual Experience Section Consistency**:
+  - Melengkapi translasi bahasa Indonesia (`title_id`, `description_id`, `highlights_id`) untuk seluruh 5 riwayat pekerjaan di Supabase database dan local `mockDb.json`.
+  - Memperbaiki data `description_id` PT Bharata yang sebelumnya terisi typo huruf `"s"`.
+  - Menambahkan translasi periode adaptif (`formatPeriod`: "Present" -> "Sekarang", "Oct" -> "Okt", dll.).
+  - Memasang `fallbackTranslations` dictionary dan helper `getExperienceField` pada `ExperienceSection` untuk mencegah teks bahasa Inggris dan Indonesia bercampur saat bahasa Indonesia aktif.
 - [x] **Showcase Proyek VisionOps Guard & Marketplace Intelligence (Hybrid RAG)**:
   - Integrasi 2 proyek unggulan AI/ML ke database Supabase production (ID 10 & 11) dan local fallback `mockDb.json`.
   - Preview image beresolusi tinggi `/visionops-preview.png` & `/rag-marketplace-preview.png` di folder `public/`.
